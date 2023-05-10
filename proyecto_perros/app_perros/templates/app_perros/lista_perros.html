@@ -1,0 +1,17 @@
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+  <div>
+    <h1>Lista de perros</h1>
+    <br>
+    <ul>
+    {% for perro in perros %}
+      <li>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+  <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
+</section>
+{% endblock contenido %}

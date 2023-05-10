@@ -1,0 +1,17 @@
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+  <div>
+    <h1>Lista de adoptantes</h1>
+    <br>
+    <ul>
+    {% for adoptante in adoptantes %}
+      <li>{{ adoptante.apellido }}, {{ adoptante.nombre }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <a class="btn btn-primary" href="{% url 'crear_adopcion' %}">Adoptar</a>
+</section>
+{% endblock contenido %}
+

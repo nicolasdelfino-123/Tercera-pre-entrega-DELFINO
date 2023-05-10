@@ -1,0 +1,19 @@
+# Python
+*.pyc
+__pycache__/
+build/
+dist/
+.cache/
+.pytest_cache/
+pygsheets.egg-info/
+.pytest_cache/
+media/*
+ambiente/
+borradoresdecodigo.py
+proyecto_perros/static/django_extensions/
+proyecto_perros/static/admin/
+proyecto_perros/db.sqlite3
+
+# Other
+.DS_Store
+.coverage
