@@ -18,7 +18,7 @@ class BuscarPerro(forms.Form):
 
 class PerroFormulario(forms.Form):
     nombre = forms.CharField(max_length= 64)
-    tamanio = forms.CharField(max_length=100)
+    tamanio = forms.CharField(label="Tamaño", max_length=100)
     fecha_entrada= forms.DateField() 
 
 
