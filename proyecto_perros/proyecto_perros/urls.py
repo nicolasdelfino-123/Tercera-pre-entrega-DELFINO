@@ -21,6 +21,7 @@ from app_perros.views import listar_perros, crear_adoptante,listar_adoptantes, c
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", listar_perros, name="index"),
     path("crear_perro/", crear_perro, name="crear_perro"),
     path("perros/", listar_perros, name="listar_perros"),
     path("crear_adoptante/", crear_adoptante, name="crear_adoptante"),
