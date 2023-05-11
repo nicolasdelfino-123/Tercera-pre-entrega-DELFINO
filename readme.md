@@ -12,6 +12,16 @@
 ```
 pip install -r requirements.txt
 ```
++ El trabajo corre con la base de datos sqlite y que para que corra bien el programa, antes de ejecutar: 
+
+```
+python manage.py runserver 
+```
++ Se debe ejecutar:
+```
+python manage.py migrate
+```
+
 + Acceder a la página
 ```
 127.0.0.1:8000
