@@ -5,6 +5,8 @@
   {% csrf_token %}
   {{ formulario.as_p }}
   {{ formulario.errors }}
-  <input type="submit" value="Buscar" />
+  <strong style="margin-bottom: 10px;">(En tamaño selecciona entre:*chico, mediano o grande)</strong>
+  <br>
+  <input type="submit" value="Buscar" style="margin-top: 10px;" />
 </form>
 {% endblock contenido %}
