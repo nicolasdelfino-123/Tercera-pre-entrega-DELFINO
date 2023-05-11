@@ -4,7 +4,7 @@ from app_perros.models import Adoptante, Perro
 # formulario busqueda #######################################################3
 
 class BuscarPerro(forms.Form):
-    tamanio = forms.CharField(max_length=100)
+    tamanio = forms.CharField(label="Tamaño", max_length=100)
     
 
 
