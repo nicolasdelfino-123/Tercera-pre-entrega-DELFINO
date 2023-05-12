@@ -25,12 +25,9 @@ urlpatterns = [
     path("crear_perro/", crear_perro, name="crear_perro"),
     path("perros/", listar_perros, name="listar_perros"),
     path("crear_adoptante/", crear_adoptante, name="crear_adoptante"),
+    path("listar_adopcion/", listar_adopcion, name="listar_adopcion"),
     path("listar_adoptante/", listar_adoptantes, name="listar_adoptante"),
     path("crear_adopcion/", crear_adopcion, name="crear_adopcion"),
-    path("listar_adopcion/", listar_adopcion, name="listar_adopcion"),
     path('buscar_perros/', buscar_perro, name='buscar_perros'),
-
-
-    
-    
+   
 ]

@@ -1,0 +1,79 @@
+##formulario perro
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<form action="{% url 'crear_perro' %}" method="post">
+  {% csrf_token %}
+  {{ formulario.as_p }}
+  {{ formulario.errors }}
+  <strong style="margin-bottom: 10px;">(En tamaño selecciona entre:*chico, mediano o grande)</strong>
+  <br>
+  <input type="submit" value="Agregar" style="margin-top: 10px;" />
+</form>
+{% endblock contenido %}
+
+#### formulario_perro con los campos muy largos
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<form action="{% url 'crear_perro' %}" method="post">
+  {% csrf_token %}
+  <div class="campo-formulario">
+    <label for="{{ formulario.nombre.id_for_label }}">Nombre:</label>
+    {{ formulario.nombre }}
+    {{ formulario.nombre.errors }}
+  </div>
+  <div class="campo-formulario">
+    <label for="{{ formulario.tamanio.id_for_label }}">Tamaño:</label>
+    {{ formulario.tamanio }}
+    {{ formulario.tamanio.errors }}
+  </div>
+  <div class="campo-formulario">
+    <label for="{{ formulario.fecha_entrada.id_for_label }}">Fecha de entrada:</label>
+    {{ formulario.fecha_entrada }}
+    {{ formulario.fecha_entrada.errors }}
+  </div>
+  <br>
+  <input type="submit" value="Agregar" />
+</form>
+
+<style>
+  .campo-formulario {
+    margin-bottom: 10px;
+  }
+  input[type="text"], select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+</style>
+
+{% endblock contenido %}
+
+#### este esta bueno 
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+  <div style="width: 25%;">
+    <form action="{% url 'crear_perro' %}" method="post">
+      {% csrf_token %}
+      <label for="{{ formulario.nombre.id_for_label }}">Nombre:</label>
+      {{ formulario.nombre }}
+      {{ formulario.nombre.errors }}
+      <br><br>
+      <div style="display: inline-block; width: 48%;">
+        <label for="{{ formulario.tamanio.id_for_label }}">Tamaño:</label>
+        {{ formulario.tamanio }}
+        {{ formulario.tamanio.errors }}
+      </div>
+      <div style="display: inline-block; margin-left: 4%; width: 48%;">
+        <label for="{{ formulario.fecha_entrada.id_for_label }}">Fecha de entrada:</label>
+        {{ formulario.fecha_entrada }}
+        {{ formulario.fecha_entrada.errors }}
+      </div>
+      <br><br>
+      <input type="submit" value="Agregar" style="margin-top: 10px;" />
+    </form>
+  </div>
+{% endblock contenido %}

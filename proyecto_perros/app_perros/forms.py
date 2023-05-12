@@ -1,28 +1,28 @@
 from django import forms
 from app_perros.models import Adoptante, Perro
 
-# formulario busqueda #######################################################3
+# formulario busqueda 
 
 class BuscarPerro(forms.Form):
-    tamanio = forms.CharField(label="Tamaño", max_length=100)
+     TAMANIO_CHOICES = (
+        ('chico', 'Chico'),
+        ('mediano', 'Mediano'),
+        ('grande', 'Grande'),
+    )
+     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
     
 
-
-# from django import forms
-
-
-# class SearchForm(forms.Form):
-#     search_term = forms.CharField(max_length=100)
-
-#################################################################################
-
 class PerroFormulario(forms.Form):
-    nombre = forms.CharField(max_length= 64)
-    tamanio = forms.CharField(label="Tamaño", max_length=100)
-    fecha_entrada= forms.DateField() 
+     TAMANIO_CHOICES = (
+        ('chico', 'Chico'),
+        ('mediano', 'Mediano'),
+        ('grande', 'Grande'),
+         )
+     nombre = forms.CharField(max_length= 64)
+     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
+     fecha_entrada= forms.DateField() 
 
 
-  
 class AdoptanteFormulario(forms.Form):
     apellido = forms.CharField(max_length=256)
     nombre = forms.CharField(max_length=256) 

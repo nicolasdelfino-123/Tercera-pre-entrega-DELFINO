@@ -37,19 +37,7 @@ def buscar_perro(request):
         )
         return http_response
 
-# def search(request):
-#     form = SearchForm()
-#     results = None
-#     if request.GET:
-#         form = SearchForm(request.GET)
-#         if form.is_valid():
-#             search_term = form.cleaned_data['search_term']
-#             # Realiza la búsqueda en la base de datos utilizando el término de búsqueda
-#             results = Perro.objects.filter(nombre__icontains=search_term)
-#     return render(request, 'app_perros/search.html', {'form': form, 'results': results})
-
 # Vistas de Perro ##########################################################################
-
 def crear_perro(request):
     '''vista para crear perro'''
     if request.method == "POST":
