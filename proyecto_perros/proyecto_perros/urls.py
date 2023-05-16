@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from app_perros.views import listar_perros, crear_adoptante,listar_adoptantes, crear_adopcion,\
-    listar_adopcion, crear_perro, buscar_perro
+from django.urls import path, include
+from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
+    listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +29,15 @@ urlpatterns = [
     path("listar_adoptante/", listar_adoptantes, name="listar_adoptante"),
     path("crear_adopcion/", crear_adopcion, name="crear_adopcion"),
     path('buscar_perros/', buscar_perro, name='buscar_perros'),
+    path('eliminar-perro/<int:id>/', eliminar_perro, name="eliminar_perro"), #DELETE
+    path('editar-perro/<int:id>/', editar_perro, name="editar_perro"),
+    path("perfiles/", include('perfiles.urls')),
+     
+    #####
+    # path('adoptante/', AdoptanteListView.as_view(), name='listar_adoptante'),
+    # path('adoptantes/<int:pk>/', AdoptanteDetailView.as_view(), name="ver_adoptante"),##
+    # path('crear-adoptante/', AdoptanteCreateView.as_view(), name="crear_adoptante"),
+    # path('editar-adoptante/<int:pk>/', AdoptanteUpdateView.as_view(), name="editar_adoptante"),###
+    # path('eliminar-adoptante/<int:pk>/', AdoptanteDeleteView.as_view(), name="eliminar_adoptante"),##
    
 ]

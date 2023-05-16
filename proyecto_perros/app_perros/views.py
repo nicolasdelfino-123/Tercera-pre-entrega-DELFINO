@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse #reverse_lazy
 from .models import Perro
+# from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
+# from django.contrib.auth.mixins import LoginRequiredMixin # ESTO SE USA EN CLASES EN LOS PARENTESIS(AL PRINCIPIO, LO QUE SIGUE)
+from django.contrib.auth.decorators import login_required
 
 from app_perros.forms import AdoptanteFormulario, AdopcionFormulario, PerroFormulario, BuscarPerro
 from app_perros.models import Perro
@@ -10,6 +13,7 @@ from app_perros.models import Adopcion
 
 
 # vista de busqueda ########################################################################
+
 def buscar_perro(request):
     if request.method == "POST":
         formulario = BuscarPerro(request.POST)
@@ -38,6 +42,7 @@ def buscar_perro(request):
         return http_response
 
 # Vistas de Perro ##########################################################################
+@login_required
 def crear_perro(request):
     '''vista para crear perro'''
     if request.method == "POST":
@@ -48,6 +53,7 @@ def crear_perro(request):
             nombre = data['nombre']
             tamanio = data['tamanio']
             fecha_entrada = data['fecha_entrada']
+            creador = request.user
             perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada)
             perro.save()
         
@@ -78,7 +84,6 @@ def listar_perros(request):
         context=contexto,
     )
     return http_response
-
 
 # Vistas de Adoptante ##########################################################################
 
@@ -111,6 +116,8 @@ def crear_adoptante(request):
     )
     return http_response
 
+##NO LO VOY A USAR PORQUE USARÉ VISTAS BASADAS EN CLASES
+@login_required
 def listar_adoptantes(request):
     '''vista para listar adoptantes'''
     contexto = {
@@ -151,6 +158,7 @@ def crear_adopcion(request):
     )
     return http_response
 
+@login_required
 def listar_adopcion(request):
     '''vista para listar adopcion'''
     contexto = {
@@ -162,3 +170,63 @@ def listar_adopcion(request):
         context=contexto,
     )
     return http_response    
+
+@login_required
+def eliminar_perro(request, id):
+   perro = Perro.objects.get(id=id)
+   if request.method == "POST":
+       perro.delete()
+       url_exitosa = reverse('listar_perros')
+       return redirect(url_exitosa)
+   
+@login_required  
+def editar_perro(request, id):
+   perro = Perro.objects.get(id=id)
+   if request.method == "POST":
+       formulario = PerroFormulario(request.POST)
+
+       if formulario.is_valid():
+           data = formulario.cleaned_data
+           perro.nombre = data['nombre']
+           perro.tamanio = data['tamanio']
+           perro.save()
+           url_exitosa = reverse('listar_perros')
+           return redirect(url_exitosa)
+   else:  # GET
+       inicial = {
+           'nombre': perro.nombre,
+           'tamanio': perro.tamanio,
+       }
+       formulario = PerroFormulario(initial=inicial)
+   return render(
+       request=request,
+       template_name='app_perros/formulario_perro.html',
+       context={'formulario': formulario},
+    )  
+   #vista basada en clase de adoptante
+
+
+#VISTAS BASADAS EN CLASES
+# class AdoptanteListView(ListView):
+#      model = Adoptante
+#      template_name = 'app_perros/lista_adoptante.html'
+    
+# class AdoptanteCreateView(CreateView):
+#      model = Adoptante
+#      fields = ('apellido', 'nombre', 'email', 'dni' )
+#      success_url = reverse_lazy('listar_adoptante')
+    
+# class AdoptanteDetailView(DetailView):
+#      model = Adoptante
+#      success_url = reverse_lazy('listar_adoptante')  
+   
+# class AdoptanteUpdateView(UpdateView):
+#      model = Adoptante
+#      fields = ('apellido', 'nombre', 'email', 'dni')
+#      success_url = reverse_lazy('listar_adoptante')
+     
+# class AdoptanteDeleteView(DeleteView):
+#      model = Adoptante
+#      success_url = reverse_lazy('listar_adoptante')        
+         
+            

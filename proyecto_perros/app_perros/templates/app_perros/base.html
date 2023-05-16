@@ -26,6 +26,12 @@
                 <a class="navbar-brand" href="{% url 'listar_perros' %}">Perros</a>
                 <a class="navbar-brand" href="{% url 'listar_adoptante' %}">Adoptantes</a>
                 <a class="navbar-brand" href="{% url 'listar_adopcion' %}">Adopciones</a>
+                {% if user.is_authenticated %}
+                <a class="btn btn-warning" href="{% url 'logout' %}">Cierre sesión</a>
+                {% else %}
+                <a class="btn btn-primary" href="{% url 'login' %}">Inicio sesión</a>
+                <a class="btn btn-success" href="{% url 'registro' %}">Registro</a>
+                {% endif %}
             </div>
         </nav>
 

@@ -77,3 +77,133 @@
     </form>
   </div>
 {% endblock contenido %}
+
+######################################### html lista_perro original
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+  <div>
+    <h1>Lista de perros</h1>
+    <br>
+    <ul>
+    {% for perro in perros %}
+      <li>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+  <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
+</section>
+{% endblock contenido %}
+
+##########codigo de formulario_perro con botones en rojo eliminar y en azul editar grandes
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+  <div>
+    <h1>Lista de perros</h1>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre y tamaño</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for perro in perros %}
+        <tr>
+          <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
+          <td>
+            <form action="{% url 'editar_perro' perro.id %}" method="get">
+              <button class="btn btn-primary" type="submit">Editar</button>
+            </form>
+          </td>
+          <td>
+            <form action="{% url 'eliminar_perro' perro.id %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-danger" type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+  <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
+</section>
+{% endblock %}
+
+##### lista adoptante.html original #############################
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+  <div>
+    <h1>Lista de adoptantes</h1>
+    <br>
+    <ul>
+    {% for adoptante in adoptantes %}
+      <li>{{ adoptante.apellido }}, {{ adoptante.nombre }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <a class="btn btn-primary" href="{% url 'crear_adopcion' %}">Adoptar</a>
+</section>
+{% endblock contenido %}
+
+######lista adoptantes con vistas basadas en clases ####
+
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<section>
+ <div>
+   <h1>Lista de adoptantes</h1>
+   <a href="{% url 'crear_adoptante' %}">Crear adoptante</a>
+   <br>
+
+   <table class="table">
+     <tbody>
+       <tr>
+         <th>ID</th>
+         <th>Nombre</th>
+         <th>Apellido</th>
+         <td></td>
+         <td></td>
+         <td></td>
+       </tr>
+       {% for adoptante in object_list %}
+       <tr>
+         <td>{{ adoptante.id }}</td>
+         <td>{{ adoptante.nombre }}</td>
+         <td>{{ adoptante.apellido }}</td>
+         <td>
+           <a href="{% url 'adoptante' adoptante.id %}">Ver</a>
+         </td>
+         <td>
+           <a href="{% url 'editar-adoptante' adoptante.id %}">Editar</a>
+         </td>
+         <td>
+           <a href="{% url 'eliminar-adoptante' adoptante.id %}">
+             <i class="bi bi-trash"></i>
+           </a>
+         </td>
+       </tr>
+       {% endfor %}
+     </tbody>
+   </table>
+
+ </div>
+</section>
+{% endblock contenido %}
+
+

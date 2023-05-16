@@ -5,11 +5,33 @@
   <div>
     <h1>Lista de perros</h1>
     <br>
-    <ul>
-    {% for perro in perros %}
-      <li>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</li>
-    {% endfor %}
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre y tamaño</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for perro in perros %}
+        <tr>
+          <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
+          <td>
+            <a href="{% url 'editar_perro' perro.id %}">Editar</a>
+          </td>
+          <td>
+           
+            <form action="{% url 'eliminar_perro' perro.id %}" method="post">
+              {% csrf_token %}
+              <input type="submit" value="eliminar"/>
+            </form>
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
   <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
