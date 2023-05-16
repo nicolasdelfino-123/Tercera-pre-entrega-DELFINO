@@ -230,7 +230,7 @@ def editar_perro(request, id):
 #      success_url = reverse_lazy('listar_adoptante')        
          
 def about(request):
-    contexto = { "about": about}
+    contexto = {}
     http_response = render(
         request=request,
         template_name='app_perros/about.html',
