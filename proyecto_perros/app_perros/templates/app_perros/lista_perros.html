@@ -21,12 +21,12 @@
             <a href="{% url 'editar_perro' perro.id %}">Editar</a>
           </td>
           <td>
-           
+           {% if user == perro.creador %}
             <form action="{% url 'eliminar_perro' perro.id %}" method="post">
               {% csrf_token %}
               <input type="submit" value="eliminar"/>
             </form>
-            
+            {% endif %}
           </td>
         </tr>
         {% endfor %}

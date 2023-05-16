@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
-    listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro
+    listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro, about
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('eliminar-perro/<int:id>/', eliminar_perro, name="eliminar_perro"), #DELETE
     path('editar-perro/<int:id>/', editar_perro, name="editar_perro"),
     path("perfiles/", include('perfiles.urls')),
+    path("about/", about ,  name='about'),
      
     #####
     # path('adoptante/', AdoptanteListView.as_view(), name='listar_adoptante'),

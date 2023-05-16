@@ -54,7 +54,7 @@ def crear_perro(request):
             tamanio = data['tamanio']
             fecha_entrada = data['fecha_entrada']
             creador = request.user
-            perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada)
+            perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador)
             perro.save()
         
             # Redireccionar al usuario a la lista de perros
@@ -229,4 +229,11 @@ def editar_perro(request, id):
 #      model = Adoptante
 #      success_url = reverse_lazy('listar_adoptante')        
          
-            
+def about(request):
+    contexto = { "about": about}
+    http_response = render(
+        request=request,
+        template_name='app_perros/about.html',
+        context=contexto,
+    )
+    return http_response

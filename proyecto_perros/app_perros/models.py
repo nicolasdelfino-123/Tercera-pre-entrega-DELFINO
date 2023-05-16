@@ -8,7 +8,7 @@ class Perro(models.Model):
     nombre = models.CharField(max_length= 64)
     tamanio = models.CharField(max_length=100)
     fecha_entrada=models.DateField(auto_now=False)
-    creador = models.ForeignKey(User, on_delete=models.SET_NULL,null=True)
+    creador = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return f"{self.nombre} | {self.tamanio}"
