@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.urls import reverse #reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from .models import Perro
 # from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 # from django.contrib.auth.mixins import LoginRequiredMixin # ESTO SE USA EN CLASES EN LOS PARENTESIS(AL PRINCIPIO, LO QUE SIGUE)
@@ -9,7 +9,7 @@ from app_perros.forms import AdoptanteFormulario, AdopcionFormulario, PerroFormu
 from app_perros.models import Perro
 from app_perros.models import Adoptante
 from app_perros.models import Adopcion
-
+from django.http import HttpResponseForbidden
 
 
 # vista de busqueda ########################################################################
@@ -46,7 +46,7 @@ def buscar_perro(request):
 def crear_perro(request):
     '''vista para crear perro'''
     if request.method == "POST":
-        formulario = PerroFormulario(request.POST)
+        formulario = PerroFormulario(request.POST, request.FILES)
 
         if formulario.is_valid():
             data = formulario.cleaned_data
@@ -56,23 +56,24 @@ def crear_perro(request):
             creador = request.user
             perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador)
             perro.save()
-        
+
             # Redireccionar al usuario a la lista de perros
             url_exitosa = reverse('listar_perros')
             return redirect(url_exitosa)
-            
+            # return reverse_lazy('listar_perros')
 
     else:  # GET
         formulario = PerroFormulario()
 
+    context = {'formulario': formulario}
     http_response = render(
         request=request,
         template_name='app_perros/formulario_perro.html',
-        context={'formulario': formulario}
+        context=context
     )
     return http_response
 
-
+    
 def listar_perros(request):
     '''vista para listar perrros'''
     contexto = {
@@ -171,13 +172,30 @@ def listar_adopcion(request):
     )
     return http_response    
 
+# @login_required
+# def eliminar_perro(request, id):
+#    perro = Perro.objects.get(id=id)
+#    if request.method == "POST":
+#        perro.delete()
+#        url_exitosa = reverse('listar_perros')
+#        return redirect(url_exitosa)
+   
+   #####version 2 de eliminar##################
 @login_required
-def eliminar_perro(request, id):
-   perro = Perro.objects.get(id=id)
-   if request.method == "POST":
-       perro.delete()
-       url_exitosa = reverse('listar_perros')
-       return redirect(url_exitosa)
+def eliminar_perro(request, perro_id):
+    perro = get_object_or_404(Perro, id=perro_id)
+    
+    if request.user == perro.creador:
+        if request.method == 'POST':
+            perro.delete()
+            return redirect('listar_perros')
+        else:
+            return render(request, 'app_perros/eliminar_perro.html', {'perro': perro})
+    else:
+        return HttpResponseForbidden('No tienes permisos para eliminar este perro.')
+   
+   
+   
    
 @login_required  
 def editar_perro(request, id):
@@ -237,3 +255,9 @@ def about(request):
         context=contexto,
     )
     return http_response
+
+
+
+def ver_mas(request, perro_id):
+    perro = get_object_or_404(Perro, id=perro_id)
+    return render(request, 'app_perros/ver_mas.html', {'perro': perro})

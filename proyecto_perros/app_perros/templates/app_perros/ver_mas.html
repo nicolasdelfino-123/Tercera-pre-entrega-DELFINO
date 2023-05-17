@@ -1,0 +1,25 @@
+{% extends "app_perros/base.html" %}
+
+{% load static %}
+
+
+{% block contenido %}
+<section>
+  <h1>Perrito en adopción</h1>
+  <table class="table">
+    <tr>
+      <td>
+        <img src="{% static 'images/imagen_del_perro.jpg' %}" alt="Imagen del perro" style="max-width: 200px; max-height: 200px;">
+      </td>
+      <td>
+        <p>Edad: X años</p>
+        <p>Raza: Raza del perro</p>
+        <p>Género: Macho/Hembra</p>
+        <p>Descripción: Breve descripción del perro y su personalidad.</p>
+        <p>Fecha de ingreso para adopción: XX/XX/XXXX</p>
+        
+      </td>
+    </tr>
+  </table>
+</section>
+{% endblock contenido %}

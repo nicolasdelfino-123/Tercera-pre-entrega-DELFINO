@@ -9,6 +9,7 @@ class Perro(models.Model):
     tamanio = models.CharField(max_length=100)
     fecha_entrada=models.DateField(auto_now=False)
     creador = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    foto = models.ImageField(upload_to='perros/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.nombre} | {self.tamanio}"

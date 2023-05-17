@@ -1,5 +1,7 @@
 {% extends "app_perros/base.html" %}
 
+{% load static %}
+
 {% block contenido %}
 <section>
   <div>
@@ -11,21 +13,37 @@
           <th>Nombre y tamaño</th>
           <th>Editar</th>
           <th>Eliminar</th>
+          <th>Ver mas</th>
+          <th>Foto</th>  <!-- Nueva columna para la foto -->
         </tr>
       </thead>
       <tbody>
         {% for perro in perros %}
         <tr>
           <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
+          
           <td>
             <a href="{% url 'editar_perro' perro.id %}">Editar</a>
           </td>
+
           <td>
-           {% if user == perro.creador %}
+            {% if user == perro.creador %}
             <form action="{% url 'eliminar_perro' perro.id %}" method="post">
               {% csrf_token %}
               <input type="submit" value="eliminar"/>
             </form>
+            {% endif %}
+          </td>
+
+          <td>
+            <a href="{% url 'ver_mas' perro.id %}">ver mas</a>
+          </td>
+            
+          <td>
+            {% if perro.foto %}
+            <img src="{% static 'images/perro1.jpg' %}" alt="{{ perro.nombre }}" style="max-width: 200px; max-height: 200px;">
+            {% else %}
+              No hay foto disponible.
             {% endif %}
           </td>
         </tr>

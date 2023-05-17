@@ -13,14 +13,19 @@ class BuscarPerro(forms.Form):
     
 
 class PerroFormulario(forms.Form):
-     TAMANIO_CHOICES = (
+    TAMANIO_CHOICES = (
         ('chico', 'Chico'),
         ('mediano', 'Mediano'),
         ('grande', 'Grande'),
-         )
-     nombre = forms.CharField(max_length= 64)
-     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
-     fecha_entrada= forms.DateField() 
+    )
+    nombre = forms.CharField(max_length=64)
+    tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
+    fecha_entrada = forms.DateField()
+    foto = forms.ImageField(label="Foto")
+
+    def __init__(self, *args, **kwargs):
+        super(PerroFormulario, self).__init__(*args, **kwargs)
+        self.fields['foto'].widget.attrs['accept'] = 'image/*'
 
 
 class AdoptanteFormulario(forms.Form):
