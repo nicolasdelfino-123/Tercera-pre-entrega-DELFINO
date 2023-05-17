@@ -60,18 +60,19 @@ def login_view(request):
 class CustomLogoutView(LogoutView):
    template_name = 'perfiles/logout.html'
    
-   def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context['nombre_usuario'] = self.request.user.username
-        return context
+   ####ESTE CODIGO ES PARA QUE ME MUESTRE CHAU NOMBRE_USUARIO EN LOGOUT.HTML, NO FUNCIONA
+#    def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         if self.request.user.is_authenticated:
+#             context['nombre_usuario'] = self.request.user.username
+#         return context
    
 #### haciendo avatar
 
 # Agrega esto al final del archivo
 class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
    form_class = UserUpdateForm
-   success_url = reverse_lazy('inicio')
+   success_url = reverse_lazy('index')
    template_name = 'perfiles/formulario_perfil.html'
 
    def get_object(self, queryset=None):
