@@ -21,7 +21,7 @@ class PerroFormulario(forms.Form):
     nombre = forms.CharField(max_length=64)
     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
     fecha_entrada = forms.DateField()
-    foto = forms.ImageField(label="Foto")
+    foto = forms.ImageField(label="Foto", required=False)
 
     def __init__(self, *args, **kwargs):
         super(PerroFormulario, self).__init__(*args, **kwargs)
