@@ -258,6 +258,12 @@ def about(request):
 
 
 
+@login_required
 def ver_mas(request, perro_id):
     perro = get_object_or_404(Perro, id=perro_id)
-    return render(request, 'app_perros/ver_mas.html', {'perro': perro})
+    es_creador = (request.user == perro.creador)
+    context = {
+        'perro': perro,
+        'es_creador': es_creador
+    }
+    return render(request, 'app_perros/ver_mas.html', context)
