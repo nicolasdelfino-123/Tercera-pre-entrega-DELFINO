@@ -258,7 +258,7 @@ def about(request):
 
 
 
-@login_required
+
 def ver_mas(request, perro_id):
     perro = get_object_or_404(Perro, id=perro_id)
     es_creador = (request.user == perro.creador)
