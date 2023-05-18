@@ -54,8 +54,9 @@ def crear_perro(request):
             nombre = data['nombre']
             tamanio = data['tamanio']
             fecha_entrada = data['fecha_entrada']
+            foto = data['foto']
             creador = request.user
-            perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador)
+            perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador, foto=foto)
             perro.save()
 
             # Redireccionar al usuario a la lista de perros
