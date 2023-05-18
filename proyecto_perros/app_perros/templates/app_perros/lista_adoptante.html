@@ -1,16 +1,36 @@
-
 {% extends "app_perros/base.html" %}
+
+{% load static %}
 
 {% block contenido %}
 <section>
   <div>
-    <h1>Lista de adoptantes</h1>
+    <h1>Estás a un paso de adoptar</h1>
+    <h5>(Create como adoptante y salvá una vida)</h5>
     <br>
-    <ul>
-    {% for adoptante in adoptantes %}
-      <li>{{ adoptante.apellido }}, {{ adoptante.nombre }}</li>
-    {% endfor %}
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Apellido y nombre</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for adoptante in adoptantes %}
+          {% if request.user == adoptante.creador %}
+            <tr>
+              <td>{{ adoptante.apellido }}, {{ adoptante.nombre }}</td>
+              <td>
+                <form action="{% url 'eliminar_adoptante' adoptante.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="submit" value="Eliminar">
+                </form>
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
   <a class="btn btn-primary" href="{% url 'crear_adopcion' %}">Adoptar</a>
 </section>

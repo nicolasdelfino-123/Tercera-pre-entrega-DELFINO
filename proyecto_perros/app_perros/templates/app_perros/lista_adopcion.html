@@ -3,14 +3,17 @@
 {% block contenido %}
 <section>
   <div>
-    <h1>Lista de adopcion</h1>
+    <h1>Adoptá y salvá una vida</h1>
     <br>
     <ul>
+    {% if request.user == adopciones.creador %}  
     {% for adopcion in adopciones %}
       <li>{{ adopcion.adoptante }}, adoptaste el perro {{ adopcion.perro }} el día {{adopcion.fecha_adopcion}} ¡Felicidades!</li>
     {% endfor %}
+    {% endif %}
+
     </ul>
   </div>
-  <a class="btn btn-primary" href="{% url 'crear_adoptante' %}">Crear adoptante</a>
+  <a class="btn btn-primary" href="{% url 'crear_adoptante' %}">Crearme adoptante</a>
 </section>
 {% endblock contenido %}

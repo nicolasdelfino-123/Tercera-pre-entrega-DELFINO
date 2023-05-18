@@ -10,6 +10,7 @@ from app_perros.models import Perro
 from app_perros.models import Adoptante
 from app_perros.models import Adopcion
 from django.http import HttpResponseForbidden
+from django.contrib import messages
 
 
 # vista de busqueda ########################################################################
@@ -101,7 +102,8 @@ def crear_adoptante(request):
             telefono = data ['telefono']
             dni = data ['dni']
             fecha_nacimiento = data ['fecha_nacimiento']
-            adoptante = Adoptante(nombre=nombre,apellido=apellido,email=email,telefono=telefono,dni=dni,fecha_nacimiento=fecha_nacimiento )
+            creador = request.user
+            adoptante = Adoptante(nombre=nombre,apellido=apellido,email=email,telefono=telefono,dni=dni,fecha_nacimiento=fecha_nacimiento, creador=creador )
             adoptante.save()
             
             
@@ -131,10 +133,24 @@ def listar_adoptantes(request):
     )
     return http_response
     
+def eliminar_adoptante(request, adoptante_id):
+    adoptante = get_object_or_404(Adoptante, id=adoptante_id)
+
+    if request.user == adoptante.creador:
+        if request.method == 'POST':
+            adoptante.delete()
+            return redirect('listar_adoptante')
+        else:
+            return render(request, 'app_perros/eliminar_adoptante.html', {'adoptante': adoptante})
+    else:
+        return HttpResponseForbidden('No tienes permisos para eliminar este adoptante.')
+    
     ######### vistas de adopcion
     
+
+
 def crear_adopcion(request):
-    '''vista para crear adopcion'''
+    '''Vista para crear adopcion'''
     if request.method == "POST":
         formulario = AdopcionFormulario(request.POST)
 
@@ -142,22 +158,24 @@ def crear_adopcion(request):
             data = formulario.cleaned_data
             adoptante = data['adoptante']
             perro = data['perro']
-            adopcion = Adopcion(adoptante=adoptante, perro=perro)
-            adopcion.save()
-    
-            # Redirecciono al usuario a la lista de adopciones
-            url_exitosa = reverse('listar_adopcion')  
-            return redirect(url_exitosa)
+            creador = request.user
 
+            # Verificar si el perro ya ha sido adoptado
+            if Adopcion.objects.filter(perro=perro).exists():
+                mensaje = f"El perro {perro.nombre} ya ha sido adoptado."
+                messages.error(request, mensaje)
+            else:
+                adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+                adopcion.save()
+                # Redireccionar a la página de felicitaciones
+                return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
     else:  # GET
         formulario = AdopcionFormulario()
 
-    http_response = render(
-        request=request,
-        template_name='app_perros/formulario_adopcion.html',
-        context={'formulario': formulario}
-    )
-    return http_response
+    context = {
+        'formulario': formulario
+    }
+    return render(request, 'app_perros/formulario_adopcion.html', context)
 
 @login_required
 def listar_adopcion(request):
@@ -267,3 +285,7 @@ def ver_mas(request, perro_id):
         'es_creador': es_creador
     }
     return render(request, 'app_perros/ver_mas.html', context)
+
+
+def felicitaciones_adopcion(request, nombre_perro):
+    return render(request, 'app_perros/felicitaciones_adopcion.html', {'nombre_perro': nombre_perro})

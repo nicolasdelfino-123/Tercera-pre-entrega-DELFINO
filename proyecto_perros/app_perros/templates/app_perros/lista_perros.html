@@ -23,13 +23,10 @@
           <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
           
           <td>
-            {% if user == perro.creador %}
-            <a href="{% url 'editar_perro' perro.id %}"></a>
-            {% csrf_token %}
-            <input type="submit" value="Editar"/>
+            {% if request.user == perro.creador %}
+              <a href="{% url 'editar_perro' perro.id %}"><input type="submit" value="Editar"/></a>
             {% endif %}
           </td>
-
           <td>
             {% if user == perro.creador %}
             <form action="{% url 'eliminar_perro' perro.id %}" method="post">
