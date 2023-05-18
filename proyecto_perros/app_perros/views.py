@@ -78,7 +78,8 @@ def crear_perro(request):
 def listar_perros(request):
     '''vista para listar perrros'''
     contexto = {
-        "perros": Perro.objects.all(),
+        "perros": Perro.objects.exclude(adopcion__isnull=False),
+                   
     }
     http_response = render(
         request=request,
@@ -161,8 +162,10 @@ def crear_adopcion(request):
             creador = request.user
 
             # Verificar si el perro ya ha sido adoptado
-            if Adopcion.objects.filter(adoptante_id=adoptante.id)[0]:
+            if Adopcion.objects.filter(perro_id=perro.id):
                 return redirect(reverse('error_adopcion'))
+            elif perro.creador == adoptante.creador:
+                return redirect(reverse('error_adopcion2'))
             else:
                 adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
                 adopcion.save()
@@ -292,3 +295,6 @@ def felicitaciones_adopcion(request, nombre_perro):
 
 def mensaje_error(request):
     return render (request, 'app_perros/error.html')
+
+def mensaje_error2(request):
+    return render (request, 'app_perros/error2.html')
