@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
     listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro, about, ver_mas,\
-    eliminar_adoptante, felicitaciones_adopcion
+    eliminar_adoptante, felicitaciones_adopcion, mensaje_error
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     path("listar_adopcion/", listar_adopcion, name="listar_adopcion"),
     path("listar_adoptante/", listar_adoptantes, name="listar_adoptante"),
     path("crear_adopcion/", crear_adopcion, name="crear_adopcion"),
+    path('error/', mensaje_error, name='error_adopcion'),
     path('buscar_perros/', buscar_perro, name='buscar_perros'),
      path('felicitaciones-adopcion/<str:nombre_perro>/', felicitaciones_adopcion, name='felicitaciones_adopcion'),
     path('eliminar-adoptante/<int:adoptante_id>/', eliminar_adoptante, name='eliminar_adoptante'), 

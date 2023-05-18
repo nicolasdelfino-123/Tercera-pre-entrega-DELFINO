@@ -161,9 +161,8 @@ def crear_adopcion(request):
             creador = request.user
 
             # Verificar si el perro ya ha sido adoptado
-            if Adopcion.objects.filter(perro=perro).exists():
-                mensaje = f"El perro {perro.nombre} ya ha sido adoptado."
-                messages.error(request, mensaje)
+            if Adopcion.objects.filter(adoptante_id=adoptante.id)[0]:
+                return redirect(reverse('error_adopcion'))
             else:
                 adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
                 adopcion.save()
@@ -289,3 +288,7 @@ def ver_mas(request, perro_id):
 
 def felicitaciones_adopcion(request, nombre_perro):
     return render(request, 'app_perros/felicitaciones_adopcion.html', {'nombre_perro': nombre_perro})
+
+
+def mensaje_error(request):
+    return render (request, 'app_perros/error.html')

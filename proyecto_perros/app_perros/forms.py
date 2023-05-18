@@ -41,5 +41,3 @@ class AdopcionFormulario(forms.Form):
     adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.all())
     perro = forms.ModelChoiceField(queryset=Perro.objects.all())
     
-    
-    
