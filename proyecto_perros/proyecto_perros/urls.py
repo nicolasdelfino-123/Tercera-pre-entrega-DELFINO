@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
     listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro, about, ver_mas,\
     eliminar_adoptante, felicitaciones_adopcion, mensaje_error, mensaje_error2
@@ -47,4 +49,4 @@ urlpatterns = [
     # path('editar-adoptante/<int:pk>/', AdoptanteUpdateView.as_view(), name="editar_adoptante"),###
     # path('eliminar-adoptante/<int:pk>/', AdoptanteDeleteView.as_view(), name="eliminar_adoptante"),##
    
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

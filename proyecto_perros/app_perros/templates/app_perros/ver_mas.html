@@ -9,7 +9,9 @@
   <table class="table">
     <tr>
       <td>
-        <img src="{% static 'images/imagen_del_perro.jpg' %}" alt="Imagen del perro" style="max-width: 200px; max-height: 200px;">
+        {% if perro.foto %}
+        <img src="{{ perro.foto.url }}" alt="{{ perro.nombre }}" style="max-width: 200px; max-height: 200px;">
+        {% endif %}
       </td>
       <td>
         <p>Edad: X años</p>
