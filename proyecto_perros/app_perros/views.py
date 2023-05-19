@@ -241,7 +241,7 @@ def editar_perro(request, id):
        formulario = PerroFormulario(initial=inicial)
    return render(
        request=request,
-       template_name='app_perros/formulario_perro.html',
+       template_name='app_perros/editar.html',
        context={'formulario': formulario, 'perro': perro},
     )  
    #vista basada en clase de adoptante
