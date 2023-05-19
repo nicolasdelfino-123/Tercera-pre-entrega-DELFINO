@@ -27,9 +27,9 @@ class PerroFormulario(forms.Form):
     fecha_entrada = forms.DateField()
     foto = forms.ImageField(label="Foto", required=False)
     #campos extras ver_mas
-    edad = forms.ChoiceField(label="Edad", choices=((str(i), str(i)) for i in range(1, 30)))
-    raza = forms.ChoiceField(label="Raza", choices=GENERO_CHOICES)
-    genero = forms.CharField(label="Género", max_length=10)
+    edad = forms.ChoiceField(label="Edad", choices=((str(i), str(i)) for i in range(1, 20)))
+    raza = forms.CharField(label="Raza", max_length=64)
+    genero = forms.ChoiceField(label="Género", choices=GENERO_CHOICES)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
     
 
