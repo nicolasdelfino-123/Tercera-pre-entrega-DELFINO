@@ -222,12 +222,13 @@ def eliminar_perro(request, perro_id):
 def editar_perro(request, id):
    perro = Perro.objects.get(id=id)
    if request.method == "POST":
-       formulario = PerroFormulario(request.POST)
+       formulario = PerroFormulario(request.FILES)
 
        if formulario.is_valid():
            data = formulario.cleaned_data
            perro.nombre = data['nombre']
            perro.tamanio = data['tamanio']
+           perro.foto = data ['foto'] if data ['foto'] else perro.foto
            perro.save()
            url_exitosa = reverse('listar_perros')
            return redirect(url_exitosa)
@@ -235,12 +236,13 @@ def editar_perro(request, id):
        inicial = {
            'nombre': perro.nombre,
            'tamanio': perro.tamanio,
+           'foto': perro.foto
        }
        formulario = PerroFormulario(initial=inicial)
    return render(
        request=request,
        template_name='app_perros/formulario_perro.html',
-       context={'formulario': formulario},
+       context={'formulario': formulario, 'perro': perro},
     )  
    #vista basada en clase de adoptante
 

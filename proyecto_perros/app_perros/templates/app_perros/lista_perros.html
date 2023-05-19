@@ -24,7 +24,7 @@
           
           <td>
             {% if request.user == perro.creador %}
-              <a href="{% url 'editar_perro' perro.id %}"><input type="submit" value="Editar"/></a>
+              <a href="{% url 'editar_perro' perro.id %}"><input type="button" value="Editar"/></a>
             {% endif %}
           </td>
           <td>

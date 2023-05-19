@@ -26,7 +26,7 @@ class PerroFormulario(forms.Form):
     def __init__(self, *args, **kwargs):
         super(PerroFormulario, self).__init__(*args, **kwargs)
         self.fields['foto'].widget.attrs['accept'] = 'image/*'
-
+        
 
 class AdoptanteFormulario(forms.Form):
     apellido = forms.CharField(max_length=256)

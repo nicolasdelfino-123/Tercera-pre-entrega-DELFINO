@@ -207,3 +207,34 @@
 {% endblock contenido %}
 
 
+######### FORMULARIO PERRRO ANTES DEL CAMBIO QUE ME DIO ESTEFI #########
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<div style="width: 25%; margin: 0 auto;">
+  <form action="{% url 'crear_perro' %}" method="post">
+    {% csrf_token %}
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.nombre.id_for_label }}">Nombre:</label>
+      {{ formulario.nombre }}
+      {{ formulario.nombre.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.tamanio.id_for_label }}">Tamaño:</label>
+      {{ formulario.tamanio }}
+      {{ formulario.tamanio.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.fecha_entrada.id_for_label }}">Fecha de entrada:</label>
+      <div style="display: inline-block;">
+        {{ formulario.fecha_entrada }}
+        {{ formulario.fecha_entrada.errors }}
+      </div>
+    </div>
+    <div style="margin-top: 10px;">
+      <input type="submit" value="Agregar"/>
+    </div>
+  </form>
+</div>
+{% endblock contenido %}
