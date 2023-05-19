@@ -10,6 +10,11 @@ class Perro(models.Model):
     fecha_entrada=models.DateField(auto_now=False)
     creador = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     foto = models.ImageField(upload_to='perros/', blank=True, null=True)
+    #campos agregados_vermas
+    edad = models.CharField(max_length=10)
+    raza = models.CharField(max_length=100)
+    genero = models.CharField(max_length=10)
+    descripcion = models.TextField(blank=True) 
 
     def __str__(self):
         return f"{self.nombre} | {self.tamanio}"

@@ -22,9 +22,29 @@
       </div>
     </div>
     <div style="margin-bottom: 10px;">
-      <label for="{{ formulario.tamanio.id_for_label }}">Seleccionar foto:</label>
+      <label for="{{ formulario.foto.id_for_label }}">Seleccionar foto:</label>
       {{ formulario.foto }}
       {{ formulario.foto.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.edad.id_for_label }}">Edad:</label>
+      {{ formulario.edad }}
+      {{ formulario.edad.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.raza.id_for_label }}">Raza:</label>
+      {{ formulario.raza }}
+      {{ formulario.raza.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.genero.id_for_label }}">Género:</label>
+      {{ formulario.genero }}
+      {{ formulario.genero.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.descripcion.id_for_label }}">Descripción:</label>
+      {{ formulario.descripcion }}
+      {{ formulario.descripcion.errors }}
     </div>
     <div style="margin-top: 10px;">
       <input type="submit" value="Agregar"/>

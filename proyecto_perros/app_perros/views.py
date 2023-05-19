@@ -42,40 +42,78 @@ def buscar_perro(request):
         )
         return http_response
 
-# Vistas de Perro ##########################################################################
+# Vistas de Perro original comentada##########################################################################
+# @login_required
+# def crear_perro(request):
+#     '''vista para crear perro'''
+#     if request.method == "POST":
+#         formulario = PerroFormulario(request.POST, request.FILES)
+
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             nombre = data['nombre']
+#             tamanio = data['tamanio']
+#             fecha_entrada = data['fecha_entrada']
+#             foto = data['foto']
+#             creador = request.user
+#             perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador, foto=foto)
+#             perro.save()
+
+#             # Redireccionar al usuario a la lista de perros
+#             url_exitosa = reverse('listar_perros')
+#             return redirect(url_exitosa)
+#             # return reverse_lazy('listar_perros')
+
+#     else:  # GET
+#         formulario = PerroFormulario()
+
+#     context = {'formulario': formulario}
+#     http_response = render(
+#         request=request,
+#         template_name='app_perros/formulario_perro.html',
+#         context=context
+#     )
+#     return http_response
+
+    ####
 @login_required
 def crear_perro(request):
-    '''vista para crear perro'''
     if request.method == "POST":
         formulario = PerroFormulario(request.POST, request.FILES)
 
         if formulario.is_valid():
-            data = formulario.cleaned_data
-            nombre = data['nombre']
-            tamanio = data['tamanio']
-            fecha_entrada = data['fecha_entrada']
-            foto = data['foto']
+            nombre = formulario.cleaned_data['nombre']
+            tamanio = formulario.cleaned_data['tamanio']
+            fecha_entrada = formulario.cleaned_data['fecha_entrada']
+            foto = formulario.cleaned_data['foto']
+            edad = formulario.cleaned_data['edad']
+            raza = formulario.cleaned_data['raza']
+            genero = formulario.cleaned_data['genero']
+            descripcion = formulario.cleaned_data['descripcion']
             creador = request.user
-            perro = Perro(nombre=nombre, tamanio=tamanio, fecha_entrada=fecha_entrada, creador=creador, foto=foto)
+
+            perro = Perro(
+                nombre=nombre,
+                tamanio=tamanio,
+                fecha_entrada=fecha_entrada,
+                foto=foto,
+                edad=edad,
+                raza=raza,
+                genero=genero,
+                descripcion=descripcion,
+                creador=creador
+            )
             perro.save()
 
             # Redireccionar al usuario a la lista de perros
-            url_exitosa = reverse('listar_perros')
-            return redirect(url_exitosa)
-            # return reverse_lazy('listar_perros')
+            return redirect('listar_perros')
 
     else:  # GET
         formulario = PerroFormulario()
 
     context = {'formulario': formulario}
-    http_response = render(
-        request=request,
-        template_name='app_perros/formulario_perro.html',
-        context=context
-    )
-    return http_response
-
-    
+    return render(request, 'app_perros/formulario_perro.html', context)
+    ####
 def listar_perros(request):
     '''vista para listar perrros'''
     contexto = {
@@ -222,7 +260,7 @@ def eliminar_perro(request, perro_id):
 def editar_perro(request, id):
    perro = Perro.objects.get(id=id)
    if request.method == "POST":
-       formulario = PerroFormulario(request.FILES)
+       formulario = PerroFormulario(request.POST, request.FILES)
 
        if formulario.is_valid():
            data = formulario.cleaned_data
@@ -280,8 +318,6 @@ def about(request):
     return http_response
 
 
-
-
 def ver_mas(request, perro_id):
     perro = get_object_or_404(Perro, id=perro_id)
     es_creador = (request.user == perro.creador)
@@ -290,6 +326,8 @@ def ver_mas(request, perro_id):
         'es_creador': es_creador
     }
     return render(request, 'app_perros/ver_mas.html', context)
+
+
 
 
 def felicitaciones_adopcion(request, nombre_perro):

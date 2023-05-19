@@ -18,10 +18,16 @@ class PerroFormulario(forms.Form):
         ('mediano', 'Mediano'),
         ('grande', 'Grande'),
     )
-    nombre = forms.CharField(max_length=64)
+    nombre = forms.CharField(label="Nombre", max_length=64)
     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
     fecha_entrada = forms.DateField()
     foto = forms.ImageField(label="Foto", required=False)
+    #campos extras ver_mas
+    edad = forms.ChoiceField(label="Edad", choices=((str(i), str(i)) for i in range(1, 20)))
+    raza = forms.CharField(max_length=100)
+    genero = forms.CharField(label="Género", max_length=10)
+    descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
+    
 
     def __init__(self, *args, **kwargs):
         super(PerroFormulario, self).__init__(*args, **kwargs)

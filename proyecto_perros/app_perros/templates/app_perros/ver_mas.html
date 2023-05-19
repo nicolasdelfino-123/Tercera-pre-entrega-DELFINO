@@ -1,11 +1,8 @@
-{% extends "app_perros/base.html" %}
-
-{% load static %}
-
+{% extends 'app_perros/base.html' %}
 
 {% block contenido %}
 <section>
-  <h1>Perrito en adopción</h1>
+  <h1>Adoptame</h1>
   <table class="table">
     <tr>
       <td>
@@ -14,11 +11,11 @@
         {% endif %}
       </td>
       <td>
-        <p>Edad: X años</p>
-        <p>Raza: Raza del perro</p>
-        <p>Género: Macho/Hembra</p>
-        <p>Descripción: Breve descripción del perro y su personalidad.</p>
-        <p>Fecha de ingreso para adopción: XX/XX/XXXX</p>
+        <p>Edad: {{ perro.edad }} años</p>
+        <p>Raza: {{ perro.raza }}</p>
+        <p>Género: {{ perro.genero }}</p>
+        <p>Descripción: {{ perro.descripcion }}</p>
+        <p>Fecha de ingreso para adopción: {{ perro.fecha_entrada }}</p>
         
       </td>
     </tr>

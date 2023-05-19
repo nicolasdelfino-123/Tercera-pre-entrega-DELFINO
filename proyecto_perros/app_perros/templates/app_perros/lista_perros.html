@@ -5,21 +5,21 @@
 {% block contenido %}
 <section>
   <div>
-    <h1>Lista de perros en adopción</h1>
+    <h1 style="text-align: center; margin-top: 20px; border: 2px solid black; padding: 10px;">Lista de perros en adopción</h1>
     <br>
-    <table class="table">
-      <thead>
+    <table class="table" style="border-collapse: collapse;">
+      <thead style="border-bottom: 1px solid black;">
         <tr>
           <th>Nombre y tamaño</th>
           <th>Editar</th>
           <th>Eliminar</th>
           <th>Ver mas</th>
-          <th>Foto</th>  <!-- Nueva columna para la foto -->
+          <th style="padding-left: 2cm;">Foto</th>
         </tr>
       </thead>
       <tbody>
         {% for perro in perros %}
-        <tr>
+        <tr style="border-top: 1px solid #888; border-bottom: 1px solid #888;">
           <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
           
           <td>
@@ -45,7 +45,11 @@
             <img src="{{ perro.foto.url }}" alt="{{ perro.nombre }}" style="max-width: 200px; max-height: 200px;">
             {% endif %}
           </td>
+        
+        <tr>
+          <td colspan="5" style="border-top: 1px solid #888;"></td>
         </tr>
+        
         {% endfor %}
       </tbody>
     </table>
