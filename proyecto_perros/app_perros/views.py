@@ -11,6 +11,7 @@ from app_perros.models import Adoptante
 from app_perros.models import Adopcion
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.template.defaultfilters import linebreaks
 
 
 # vista de busqueda ########################################################################
@@ -256,32 +257,54 @@ def eliminar_perro(request, perro_id):
    
    
    
-@login_required  
-def editar_perro(request, id):
-   perro = Perro.objects.get(id=id)
-   if request.method == "POST":
-       formulario = PerroFormulario(request.POST, request.FILES)
+# @login_required  
+# def editar_perro(request, id):
+#    perro = Perro.objects.get(id=id)
+#    if request.method == "POST":
+#        formulario = PerroFormulario(request.POST, request.FILES)
 
-       if formulario.is_valid():
-           data = formulario.cleaned_data
-           perro.nombre = data['nombre']
-           perro.tamanio = data['tamanio']
-           perro.foto = data ['foto'] if data ['foto'] else perro.foto
-           perro.save()
-           url_exitosa = reverse('listar_perros')
-           return redirect(url_exitosa)
-   else:  # GET
-       inicial = {
-           'nombre': perro.nombre,
-           'tamanio': perro.tamanio,
-           'foto': perro.foto
-       }
-       formulario = PerroFormulario(initial=inicial)
-   return render(
-       request=request,
-       template_name='app_perros/editar.html',
-       context={'formulario': formulario, 'perro': perro},
-    )  
+#        if formulario.is_valid():
+#            data = formulario.cleaned_data
+#            perro.nombre = data['nombre']
+#            perro.tamanio = data['tamanio']
+#            perro.foto = data ['foto'] if data ['foto'] else perro.foto
+#            perro.save()
+#            url_exitosa = reverse('listar_perros')
+#            return redirect(url_exitosa)
+#    else:  # GET
+#        inicial = {
+#            'nombre': perro.nombre,
+#            'tamanio': perro.tamanio,
+#            'foto': perro.foto
+#        }
+#        formulario = PerroFormulario(initial=inicial)
+#    return render(
+#        request=request,
+#        template_name='app_perros/editar.html',
+#        context={'formulario': formulario, 'perro': perro},
+#     )  
+   ####editar opcion 2####
+@login_required
+def editar_perro(request, id):
+    perro = get_object_or_404(Perro, id=id)
+
+    if request.method == "POST":
+        formulario = PerroFormulario(request.POST, request.FILES, instance=perro)
+
+        if formulario.is_valid():
+            formulario.save()
+
+            # Redireccionar al usuario a la lista de perros
+            return redirect('listar_perros')
+    else:
+        formulario = PerroFormulario()
+
+    context = {'formulario': formulario, 'perro': perro}
+    return render(request, 'app_perros/editar.html', context)
+   #####
+   
+   
+   
    #vista basada en clase de adoptante
 
 
@@ -321,9 +344,11 @@ def about(request):
 def ver_mas(request, perro_id):
     perro = get_object_or_404(Perro, id=perro_id)
     es_creador = (request.user == perro.creador)
+    descripcion = perro.descripcion.replace('\n', '<br>')  # Reemplazar saltos de línea por <br> tags
     context = {
         'perro': perro,
-        'es_creador': es_creador
+        'es_creador': es_creador,
+        'descripcion': descripcion,
     }
     return render(request, 'app_perros/ver_mas.html', context)
 
