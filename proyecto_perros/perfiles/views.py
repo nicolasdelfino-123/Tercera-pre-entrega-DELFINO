@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from .models import Avatar
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView
@@ -82,20 +84,26 @@ class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
        return self.request.user
    
    
-def agregar_avatar(request):
-  if request.method == "POST":
-      formulario = AvatarFormulario(request.POST, request.FILES) # Aquí me llega toda la info del formulario html
 
-      if formulario.is_valid():
-          avatar = formulario.save()
-          avatar.user = request.user
-          avatar.save()
-          url_exitosa = reverse('index')
-          return redirect(url_exitosa)
-  else:  # GET
-      formulario = AvatarFormulario()
-  return render(
-      request=request,
-      template_name="perfiles/formulario_avatar.html",
-      context={'form': formulario},
-  )
+@login_required
+def agregar_avatar(request):
+    if request.method == "POST":
+        formulario = AvatarFormulario(request.POST, request.FILES)
+
+        if formulario.is_valid():
+            avatar = formulario.save(commit=False)
+            avatar.user = request.user
+            avatar.save()
+            url_exitosa = reverse('index')
+            return redirect(url_exitosa)
+    else:  # GET
+        formulario = AvatarFormulario()
+
+    # Obtener el avatar del usuario actual
+    avatar_usuario = Avatar.objects.get(user=request.user) if Avatar.objects.filter(user=request.user).exists() else None
+
+    return render(
+        request=request,
+        template_name="perfiles/formulario_avatar.html",
+        context={'form': formulario, 'avatar': avatar_usuario}
+    )

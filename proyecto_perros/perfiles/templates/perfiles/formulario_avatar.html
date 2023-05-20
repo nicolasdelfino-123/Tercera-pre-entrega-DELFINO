@@ -1,10 +1,23 @@
-{% extends "app_perros/base.html" %}
-
+{% extends 'base.html' %}
+{% load static %}
 {% block contenido %}
-<h3>Subir tu Avatar</h3>
-<form method="post" enctype="multipart/form-data">
- {% csrf_token %}
- {{ form.as_p }}
- <input type="submit" value="Subir imagen"/>
-</form>
-{% endblock contenido %}
+  <header>
+    <nav>
+      <ul>
+        <li>
+          {% if avatar %}
+            <img src="{{ avatar.imagen.url }}" alt="Avatar">
+          {% else %}
+            <img src="{% static 'avatar/default-avatar.png' %}" alt="Default Avatar">
+          {% endif %}
+          {{ request.user.username }}
+        </li>
+        <!-- Resto de los elementos del menú -->
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <!-- Contenido de la página -->
+  </section>
+{% endblock %}
