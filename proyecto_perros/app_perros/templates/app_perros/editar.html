@@ -2,7 +2,7 @@
 
 {% block contenido %}
 <div style="width: 25%; margin: 0 auto;">
-  <form action="{% url 'editar_perro' perro.id %}" method="post" enctype='multipart/form-data'>
+  <form action="{% url 'editar_perro' perro.id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div style="margin-bottom: 10px;">
       <label for="{{ formulario.nombre.id_for_label }}">Nombre:</label>
@@ -22,12 +22,32 @@
       </div>
     </div>
     <div style="margin-bottom: 10px;">
-      <label for="{{ formulario.tamanio.id_for_label }}">Seleccionar foto:</label>
+      <label for="{{ formulario.foto.id_for_label }}">Seleccionar foto:</label>
       {{ formulario.foto }}
       {{ formulario.foto.errors }}
     </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.edad.id_for_label }}">Edad:</label>
+      {{ formulario.edad }}
+      {{ formulario.edad.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.raza.id_for_label }}">Raza:</label>
+      {{ formulario.raza }}
+      {{ formulario.raza.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.genero.id_for_label }}">Género:</label>
+      {{ formulario.genero }}
+      {{ formulario.genero.errors }}
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="{{ formulario.descripcion.id_for_label }}">Descripción:</label>
+      <textarea name="{{ formulario.descripcion.html_name }}" id="{{ formulario.descripcion.id_for_label }}" rows="4" style="width: 100%; max-width: 100%;">{{ formulario.descripcion.value|default_if_none:'' }}</textarea>
+      {{ formulario.descripcion.errors }}
+    </div>
     <div style="margin-top: 10px;">
-      <input type="submit" value="Agregar"/>
+      <input type="submit" value="Actualizar"/>
     </div>
   </form>
 </div>

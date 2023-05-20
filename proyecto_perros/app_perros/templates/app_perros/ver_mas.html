@@ -14,9 +14,9 @@
         <p>Edad: {{ perro.edad }} años</p>
         <p>Raza: {{ perro.raza }}</p>
         <p>Género: {{ perro.genero }}</p>
-        <p>Descripción: {{ perro.descripcion }}</p>
+        <p>Descripción:</p>
+        <p>{{ descripcion|safe }}</p>
         <p>Fecha de ingreso para adopción: {{ perro.fecha_entrada }}</p>
-        
       </td>
     </tr>
   </table>
