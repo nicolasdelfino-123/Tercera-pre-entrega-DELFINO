@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'app_perros/base.html' %}
 {% load static %}
 {% block contenido %}
   <header>
@@ -8,7 +8,7 @@
           {% if avatar %}
             <img src="{{ avatar.imagen.url }}" alt="Avatar">
           {% else %}
-            <img src="{% static 'avatar/default-avatar.png' %}" alt="Default Avatar">
+            <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
           {% endif %}
           {{ request.user.username }}
         </li>
