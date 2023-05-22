@@ -238,3 +238,54 @@
   </form>
 </div>
 {% endblock contenido %}
+
+### html ver_mas ultima correccion mejorado todo a la izquierda 21/5 17hs######
+
+{% extends 'app_perros/base.html' %}
+
+{% block contenido %}
+<section>
+  <h1>Adoptame</h1>
+  <table class="table">
+    <tr>
+      <td>
+        {% if perro.foto %}
+        <img src="{{ perro.foto.url }}" alt="{{ perro.nombre }}" style="max-width: 200px; max-height: 200px;">
+        {% endif %}
+      </td>
+      <td>
+        <style>
+          .field-left {
+            margin-left: -25cm; /* Ajusta este valor para controlar la distancia a la izquierda */
+          }
+
+          .field-left strong u {
+            text-decoration: underline;
+          }
+
+          .descripcion-field {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+            height: 200px; /* Ajusta la altura según tus necesidades */
+            width: 300px; /* Ajusta la anchura según tus necesidades */
+            overflow: auto;
+            word-wrap: break-word;
+            margin-left: -25cm;
+          }
+        </style>
+        
+        <p class="field-left"><strong><u>Nombre</u>:</strong> {{ perro.nombre }}</p>
+        <p class="field-left"><strong><u>Tamaño</u>:</strong> {{ perro.tamanio }}</p>
+        <p class="field-left"><strong><u>Edad</u>:</strong> {{ perro.edad }} años</p>
+        <p class="field-left"><strong><u>Raza</u>:</strong> {{ perro.raza }}</p>
+        <p class="field-left"><strong><u>Género</u>:</strong> {{ perro.genero }}</p>
+        <p class="field-left"><strong><u>Fecha de ingreso para adopción</u>:</strong> {{ perro.fecha_entrada }}</p>
+        <p class="field-left"><strong><u>Descripción</u>:</strong></p>
+        <div class="descripcion-field">{{ perro.descripcion|safe }}</div>
+        
+      </td>
+    </tr>
+  </table>
+</section>
+{% endblock contenido %}
