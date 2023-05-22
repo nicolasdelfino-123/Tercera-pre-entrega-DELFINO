@@ -8,11 +8,15 @@
       <ul>
         <li>
           {% if avatar %}
-            <img src="{{ avatar.imagen.url }}" alt="Avatar">
+            <div class="avatar-container">
+              <img class="avatar-image" src="{{ avatar.imagen.url }}" alt="Avatar">
+            </div>
           {% else %}
-            <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+            <div class="avatar-container">
+              <img class="avatar-image" src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+            </div>
           {% endif %}
-          {{ request.user.username }}
+          <span>{{ request.user.username }}</span>
         </li>
         <!-- Resto de los elementos del menú -->
       </ul>
@@ -29,5 +33,19 @@
     </form>
   </section>
 
+  <style>
+    .avatar-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar-image {
+      width: 100px; /* Ancho deseado */
+      height: 100px; /* Alto deseado */
+      border-radius: 50%; /* Para hacer la imagen circular */
+      object-fit: cover; /* Ajusta la imagen para que se ajuste al tamaño del contenedor */
+      margin-right: 8px; /* Espacio entre la imagen y el nombre de usuario */
+    }
+  </style>
 
 {% endblock contenido %}
