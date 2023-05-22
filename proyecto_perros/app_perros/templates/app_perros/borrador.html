@@ -289,3 +289,31 @@
   </table>
 </section>
 {% endblock contenido %}
+
+###################viejo formulario avatar con imagen fija el error esta en el if, yelse
+
+{% extends 'app_perros/base.html' %}
+{% load static %}
+{% block contenido %}
+  <header>
+    <nav>
+      <ul>
+        <li>
+          {% if avatar %}
+            <img src="{{ avatar.imagen.url }}" alt="Avatar">
+          {% else %}
+            <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+          {% endif %}
+          {{ request.user.username }}
+        </li>
+        <!-- Resto de los elementos del menú -->
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <!-- Contenido de la página -->
+  </section>
+{% endblock %}
+
+

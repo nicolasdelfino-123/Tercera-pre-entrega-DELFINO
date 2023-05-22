@@ -74,7 +74,7 @@ class CustomLogoutView(LogoutView):
 #         return context
    
 
-# Agrega esto al final del archivo
+#Agrega esto al final del archivo
 class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
    form_class = UserUpdateForm
    success_url = reverse_lazy('index')
@@ -84,16 +84,40 @@ class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
        return self.request.user
    
    
+#viejo formulario avatar
+# @login_required
+# def agregar_avatar(request):
+#     if request.method == "POST":
+#         formulario = AvatarFormulario(request.POST, request.FILES)
 
-@login_required
+#         if formulario.is_valid():
+#             avatar = formulario.save(commit=False)
+#             avatar.user = request.user
+#             avatar.save()
+#             url_exitosa = reverse('index')
+#             return redirect(url_exitosa)
+#     else:  # GET
+#         formulario = AvatarFormulario()
+
+#     # Obtener el avatar del usuario actual
+#     avatar_usuario = Avatar.objects.get(user=request.user) if Avatar.objects.filter(user=request.user).exists() else None
+
+#     return render(
+#         request=request,
+#         template_name="perfiles/formulario_avatar.html",
+#         context={'form': formulario, 'avatar': avatar_usuario}
+#     )
+
 def agregar_avatar(request):
     if request.method == "POST":
         formulario = AvatarFormulario(request.POST, request.FILES)
 
         if formulario.is_valid():
-            avatar = formulario.save(commit=False)
-            avatar.user = request.user
-            avatar.save()
+            avatar_anterior = Avatar.objects.filter(user=request.user)
+            if (len(avatar_anterior) > 0):
+                avatar_anterior.delete()
+            avatar_nuevo = Avatar(user=request.user, imagen=formulario.cleaned_data["imagen"])
+            avatar_nuevo.save()
             url_exitosa = reverse('index')
             return redirect(url_exitosa)
     else:  # GET

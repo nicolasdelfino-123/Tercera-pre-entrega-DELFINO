@@ -1,1 +1,33 @@
 {% extends 'app_perros/base.html' %}
+
+{% load static %}
+{% block contenido %}
+
+  <header>
+    <nav>
+      <ul>
+        <li>
+          {% if avatar %}
+            <img src="{{ avatar.imagen.url }}" alt="Avatar">
+          {% else %}
+            <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+          {% endif %}
+          {{ request.user.username }}
+        </li>
+        <!-- Resto de los elementos del menú -->
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <!-- Contenido de la página -->
+    <h3>Editar avatar:</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Guardar"/>
+    </form>
+  </section>
+
+
+{% endblock contenido %}
