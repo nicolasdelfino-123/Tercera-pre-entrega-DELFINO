@@ -33,7 +33,10 @@ class UserRegisterForm(UserCreationForm):
 # form mejorado para que actualice password 
 
 class UserUpdateForm(UserChangeForm):
-    
+    def _init_(self, *args, **kwargs):
+        super()._init_(*args, **kwargs)
+        self.fields.pop('password')
+
     class Meta:
         model = User
         fields = ['last_name', 'first_name', 'email']
@@ -42,7 +45,6 @@ class UserUpdateForm(UserChangeForm):
             'first_name': 'Nombre',
             'email': 'Correo electrónico'
         }
-
 ### esto me hace agregar para mejorar pass
 
 
