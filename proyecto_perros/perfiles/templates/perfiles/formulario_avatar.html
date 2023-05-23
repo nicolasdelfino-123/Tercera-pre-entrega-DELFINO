@@ -9,11 +9,15 @@
         <li>
           {% if avatar %}
             <div class="avatar-container">
-              <img class="avatar-image" src="{{ avatar.imagen.url }}" alt="Avatar">
+              <div class="avatar-image">
+                <img src="{{ avatar.imagen.url }}" alt="Avatar">
+              </div>
             </div>
           {% else %}
             <div class="avatar-container">
-              <img class="avatar-image" src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+              <div class="avatar-image">
+                <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+              </div>
             </div>
           {% endif %}
           <span>{{ request.user.username }}</span>
@@ -43,8 +47,13 @@
       width: 100px; /* Ancho deseado */
       height: 100px; /* Alto deseado */
       border-radius: 50%; /* Para hacer la imagen circular */
-      object-fit: cover; /* Ajusta la imagen para que se ajuste al tamaño del contenedor */
-      margin-right: 8px; /* Espacio entre la imagen y el nombre de usuario */
+      overflow: hidden; /* Oculta cualquier parte de la imagen que supere los límites del contenedor circular */
+    }
+
+    .avatar-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   </style>
 
