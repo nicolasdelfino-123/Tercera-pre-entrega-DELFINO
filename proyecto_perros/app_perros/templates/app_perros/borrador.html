@@ -479,3 +479,43 @@
     margin-right: 8px; /* Espacio entre la imagen y el nombre de usuario */
   }
 </style>
+
+## modificando view, form, y htm de editar perfil ## estos son los originales abajo ##
+
+
+## esta es el forms.py de perfiles
+class UserUpdateForm(forms.ModelForm):
+
+   class Meta:
+       model = User
+       fields = ['last_name', 'first_name', 'email']
+       labels = { 'last_name':'Apellido',
+                 'first_name': 'Nombre',
+                 'email': 'Correo electrónico'
+                
+        }
+
+### esta es la views.py de perfiles ###
+
+class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
+   form_class = UserUpdateForm
+   success_url = reverse_lazy('index')
+   template_name = 'perfiles/formulario_perfil.html'
+
+   def get_object(self, queryset=None):
+       return self.request.user
+
+### este es el html formulario_perfil andando sin modificar password
+
+{% extends "app_perros/base.html" %}
+
+{% block contenido %}
+<p>Tu username es <b>{{ object.username }}</b></p>
+
+<h3>Editar datos:</h3>
+<form method="post">
+ {% csrf_token %}
+ {{ form.as_p }}
+ <input type="submit" value="Salvar"/>
+</form>
+{% endblock contenido %}

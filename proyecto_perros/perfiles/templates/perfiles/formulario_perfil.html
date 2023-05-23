@@ -1,12 +1,16 @@
 {% extends "app_perros/base.html" %}
 
 {% block contenido %}
-<p>Tu username es <b>{{ object.username }}</b></p>
+    <p>Tu username es <b>{{ object.username }}</b></p>
 
-<h3>Editar datos:</h3>
-<form method="post">
- {% csrf_token %}
- {{ form.as_p }}
- <input type="submit" value="Salvar"/>
-</form>
+    <h3>Editar datos:</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h3>Cambiar contraseña:</h3>
+        {{ password_formulario.as_p }}
+
+        <input type="submit" value="Salvar"/>
+    </form>
 {% endblock contenido %}

@@ -7,6 +7,7 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from .models import Avatar
+from .forms import UserUpdateForm, CustomPasswordChangeForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView
@@ -75,14 +76,55 @@ class CustomLogoutView(LogoutView):
    
 
 #Agrega esto al final del archivo
-class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
-   form_class = UserUpdateForm
-   success_url = reverse_lazy('index')
-   template_name = 'perfiles/formulario_perfil.html'
 
-   def get_object(self, queryset=None):
-       return self.request.user
+##vieja view perfil andando##
+
+# class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
+#    form_class = UserUpdateForm
+#    success_url = reverse_lazy('index')
+#    template_name = 'perfiles/formulario_perfil.html'
+
+#    def get_object(self, queryset=None):
+#        return self.request.user
    
+   ## nueva view con password incorporado 
+   
+
+class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('index')
+    template_name = 'perfiles/formulario_perfil.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'password_formulario' not in context:
+            context['password_formulario'] = CustomPasswordChangeForm(user=self.request.user)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        password_formulario = CustomPasswordChangeForm(user=request.user, data=request.POST)
+
+        if form.is_valid() and password_formulario.is_valid():
+            return self.form_valid(form, password_formulario)
+        else:
+            return self.form_invalid(form, password_formulario)
+
+    def form_valid(self, form, password_formulario):
+        self.object = form.save()
+
+        if password_formulario.is_valid():
+            user = password_formulario.save()
+            return redirect(self.success_url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, password_formulario=password_formulario))
+
+    def form_invalid(self, form, password_formulario):
+        return self.render_to_response(self.get_context_data(form=form, password_formulario=password_formulario))
    
 #viejo formulario avatar
 # @login_required
