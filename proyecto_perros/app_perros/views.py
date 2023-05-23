@@ -193,7 +193,7 @@ def eliminar_adoptante(request, adoptante_id):
 def crear_adopcion(request):
     '''Vista para crear adopcion'''
     if request.method == "POST":
-        formulario = AdopcionFormulario(request.POST)
+        formulario = AdopcionFormulario(request.POST, user=request.user)
 
         if formulario.is_valid():
             data = formulario.cleaned_data
@@ -212,7 +212,7 @@ def crear_adopcion(request):
                 # Redireccionar a la página de felicitaciones
                 return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
     else:  # GET
-        formulario = AdopcionFormulario()
+        formulario = AdopcionFormulario(user=request.user)
 
     context = {
         'formulario': formulario

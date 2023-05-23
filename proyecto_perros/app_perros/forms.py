@@ -52,9 +52,15 @@ class AdoptanteFormulario(forms.Form):
     fecha_nacimiento = forms.DateField()
 
 
+
 class AdopcionFormulario(forms.Form):
-    adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.all())
+    adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.none())
     perro = forms.ModelChoiceField(queryset=Perro.objects.exclude(adopcion__isnull=False))
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super(AdopcionFormulario, self).__init__(*args, **kwargs)
+        self.fields['adoptante'].queryset = Adoptante.objects.filter(creador=user)
 
 
 
