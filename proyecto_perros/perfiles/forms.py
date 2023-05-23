@@ -33,8 +33,8 @@ class UserRegisterForm(UserCreationForm):
 # form mejorado para que actualice password 
 
 class UserUpdateForm(UserChangeForm):
-    def _init_(self, *args, **kwargs):
-        super()._init_(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fields.pop('password')
 
     class Meta:
