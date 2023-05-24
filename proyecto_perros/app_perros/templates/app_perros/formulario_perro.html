@@ -51,15 +51,4 @@
     </div>
   </form>
 </div>
-<script>
-  window.onload = function() {
-    document.querySelector("form").addEventListener("submit", function(event) {
-      const fileInput = document.querySelector("input[type='file']");
-      if (fileInput.value === "") {
-        event.preventDefault();
-        alert("Por favor, seleccione una foto.");
-      }
-    });
-  }
-</script>
 {% endblock contenido %}

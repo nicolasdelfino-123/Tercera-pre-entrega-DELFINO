@@ -26,19 +26,6 @@ class PerroFormulario(forms.ModelForm):
     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
     genero = forms.ChoiceField(label="Género", choices=GENERO_CHOICES)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
-
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance')
-        super(PerroFormulario, self).__init__(*args, **kwargs)
-        if instance:
-            self.fields['nombre'].initial = instance.nombre
-            self.fields['tamanio'].initial = instance.tamanio
-            self.fields['fecha_entrada'].initial = instance.fecha_entrada
-            self.fields['edad'].initial = instance.edad
-            self.fields['raza'].initial = instance.raza
-            self.fields['genero'].initial = instance.genero
-            self.fields['descripcion'].initial = instance.descripcion
-
     class Meta:
         model = Perro
         fields = ['nombre', 'tamanio', 'fecha_entrada', 'foto', 'edad', 'raza', 'genero', 'descripcion']
