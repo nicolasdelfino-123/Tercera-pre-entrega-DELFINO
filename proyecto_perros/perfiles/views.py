@@ -167,9 +167,18 @@ def agregar_avatar(request):
 
     # Obtener el avatar del usuario actual
     avatar_usuario = Avatar.objects.get(user=request.user) if Avatar.objects.filter(user=request.user).exists() else None
-
+    #  avatar_usuario = Avatar.objects.filter(user=request.user).first()
     return render(
         request=request,
         template_name="perfiles/formulario_avatar.html",
         context={'form': formulario, 'avatar': avatar_usuario}
     )
+    
+    # return render(
+    #    request=request,
+    #    template_name="perfiles/formulario_avatar.html",
+    #    context={'avatar': avatar_usuario, 'form': formulario}
+    # )
+    
+    
+    

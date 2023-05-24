@@ -1,5 +1,7 @@
 {% extends "app_perros/base.html" %}
 
+{% load static %}
+
 {% block contenido %}
 <form action="{% url 'buscar_perros' %}" method="post">
   {% csrf_token %}
@@ -8,9 +10,26 @@
   <br>
   <input type="submit" value="Buscar" style="margin-top: 10px;" />
 </form>
+
+<div class="static-image-container">
+  <img src="{% static 'image/foto-fija.jpg' %}" alt="Imagen Estática">
+</div>
+
+<style>
+.static-image-container {
+  position: absolute;
+  top: 3cm;
+  left: 16cm;
+  width: 200px;
+  height: 200px;
+  opacity: 0.80; /* Ajusta el valor de opacidad según tus preferencias */
+  /* Otros estilos personalizados para el contenedor */
+}
+
+
+
+</style>
 {% endblock contenido %}
-
-
 
 
 

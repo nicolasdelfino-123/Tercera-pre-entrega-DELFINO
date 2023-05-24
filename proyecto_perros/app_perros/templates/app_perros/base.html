@@ -35,8 +35,8 @@
       <nav class="navbar navbar-dark bg-dark static-top">
         <div class="container">
           <a class="navbar-brand" href="{% url 'listar_perros' %}">Perros</a>
-          <a class="navbar-brand" href="{% url 'listar_adoptante' %}">Adoptantes</a>
           <a class="navbar-brand" href="{% url 'listar_adopcion' %}">Crearme como adoptante</a>
+          <a class="navbar-brand" href="{% url 'listar_adoptante' %}">Adoptantes</a>
           {% if user.is_authenticated %}
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

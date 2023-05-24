@@ -1,27 +1,27 @@
 {% extends 'app_perros/base.html' %}
 
-{% load static %}
-{% block contenido %}
 
+{% block contenido %}
+{% load static %}
   <header>
     <nav>
       <ul>
-        <li>
-          {% if avatar %}
-            <div class="avatar-container">
-              <div class="avatar-image">
-                <img src="{{ avatar.imagen.url }}" alt="Avatar">
-              </div>
-            </div>
-          {% else %}
-            <div class="avatar-container">
-              <div class="avatar-image">
-                <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
-              </div>
-            </div>
-          {% endif %}
-          <span>{{ request.user.username }}</span>
-        </li>
+       <li>
+  {% if avatar %}
+    <div class="avatar-container">
+      <div class="avatar-image">
+        <img src="{{ avatar.imagen.url }}" alt="Avatar">
+      </div>
+    </div>
+  {% else %}
+    <div class="avatar-container">
+      <div class="avatar-image">
+        <img src="{% static 'avatar/default-avatar.png.jpg' %}" alt="Default Avatar">
+      </div>
+    </div>
+  {% endif %}
+  <span>{{ request.user.username }}</span>
+</li>
         <!-- Resto de los elementos del menú -->
       </ul>
     </nav>
