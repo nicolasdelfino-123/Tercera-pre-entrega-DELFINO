@@ -114,6 +114,8 @@ def crear_perro(request):
 
     context = {'formulario': formulario}
     return render(request, 'app_perros/formulario_perro.html', context)
+   
+   
     ####
 def listar_perros(request):
     '''vista para listar perrros'''
@@ -297,12 +299,10 @@ def editar_perro(request, id):
             # Redireccionar al usuario a la lista de perros
             return redirect('listar_perros')
     else:
-        formulario = PerroFormulario()
+        formulario = PerroFormulario(instance=perro)
 
     context = {'formulario': formulario, 'perro': perro}
     return render(request, 'app_perros/editar.html', context)
-   #####
-   
    
    
    #vista basada en clase de adoptante
