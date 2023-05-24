@@ -360,9 +360,19 @@ def ver_mas(request, perro_id):
 
 
 
+# def felicitaciones_adopcion(request, nombre_perro):
+#     return render(request, 'app_perros/felicitaciones_adopcion.html', {'nombre_perro': nombre_perro})
 def felicitaciones_adopcion(request, nombre_perro):
-    return render(request, 'app_perros/felicitaciones_adopcion.html', {'nombre_perro': nombre_perro})
+    # Lógica para obtener la URL de la imagen del perro adoptado
+    perro = Perro.objects.get(nombre=nombre_perro)
+    url_imagen_perro = perro.foto.url
 
+    context = {
+        'nombre_perro': nombre_perro,
+        'url_imagen_perro': url_imagen_perro,
+    }
+
+    return render(request, 'app_perros/felicitaciones_adopcion.html', context)
 
 def mensaje_error(request):
     return render (request, 'app_perros/error.html')

@@ -1,9 +1,17 @@
 {% extends "app_perros/base.html" %}
 
 {% block contenido %}
+<style>
+    .adopted-dog-image {
+        max-width: 400px; /* Establece el ancho máximo de la imagen */
+        height: auto; /* Mantiene la proporción de aspecto original de la imagen */
+    }
+</style>
+
 <section>
   <div>
     <h1>¡Felicidades, acabas de adoptar al perro: {{ nombre_perro }}!</h1>
+    <img src="{{ url_imagen_perro }}" alt="Imagen del perro adoptado" class="adopted-dog-image">
   </div>
 </section>
 {% endblock contenido %}
