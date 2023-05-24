@@ -77,38 +77,41 @@ def buscar_perro(request):
 #     return http_response
 
     ####
+
 @login_required
 def crear_perro(request):
     if request.method == "POST":
         formulario = PerroFormulario(request.POST, request.FILES)
 
         if formulario.is_valid():
-            nombre = formulario.cleaned_data['nombre']
-            tamanio = formulario.cleaned_data['tamanio']
-            fecha_entrada = formulario.cleaned_data['fecha_entrada']
-            foto = formulario.cleaned_data['foto']
-            edad = formulario.cleaned_data['edad']
-            raza = formulario.cleaned_data['raza']
-            genero = formulario.cleaned_data['genero']
-            descripcion = formulario.cleaned_data['descripcion']
-            creador = request.user
+            if formulario.cleaned_data['foto']:
+                nombre = formulario.cleaned_data['nombre']
+                tamanio = formulario.cleaned_data['tamanio']
+                fecha_entrada = formulario.cleaned_data['fecha_entrada']
+                foto = formulario.cleaned_data['foto']
+                edad = formulario.cleaned_data['edad']
+                raza = formulario.cleaned_data['raza']
+                genero = formulario.cleaned_data['genero']
+                descripcion = formulario.cleaned_data['descripcion']
+                creador = request.user
 
-            perro = Perro(
-                nombre=nombre,
-                tamanio=tamanio,
-                fecha_entrada=fecha_entrada,
-                foto=foto,
-                edad=edad,
-                raza=raza,
-                genero=genero,
-                descripcion=descripcion,
-                creador=creador
-            )
-            perro.save()
+                perro = Perro(
+                    nombre=nombre,
+                    tamanio=tamanio,
+                    fecha_entrada=fecha_entrada,
+                    foto=foto,
+                    edad=edad,
+                    raza=raza,
+                    genero=genero,
+                    descripcion=descripcion,
+                    creador=creador
+                )
+                perro.save()
 
-            # Redireccionar al usuario a la lista de perros
-            return redirect('listar_perros')
-
+                # Redireccionar al usuario a la lista de perros
+                return redirect('listar_perros')
+            else:
+                messages.error(request, 'Debes seleccionar una foto.')
     else:  # GET
         formulario = PerroFormulario()
 
@@ -284,7 +287,8 @@ def eliminar_perro(request, perro_id):
 #        context={'formulario': formulario, 'perro': perro},
 #     )  
    ####editar opcion 2####
-@login_required
+
+
 def editar_perro(request, id):
     perro = get_object_or_404(Perro, id=id)
 
@@ -292,12 +296,13 @@ def editar_perro(request, id):
         formulario = PerroFormulario(request.POST, request.FILES, instance=perro)
 
         if formulario.is_valid():
-            formulario.save()
-
-            # Redireccionar al usuario a la lista de perros
-            return redirect('listar_perros')
+            if formulario.cleaned_data['foto']:
+                formulario.save()
+                return redirect('listar_perros')
+            else:
+                messages.error(request, 'Debes seleccionar una foto.')
     else:
-        formulario = PerroFormulario()
+        formulario = PerroFormulario(instance=perro)
 
     context = {'formulario': formulario, 'perro': perro}
     return render(request, 'app_perros/editar.html', context)
