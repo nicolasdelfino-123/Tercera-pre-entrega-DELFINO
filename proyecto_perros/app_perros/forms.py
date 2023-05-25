@@ -54,16 +54,41 @@ class AdoptanteFormulario(forms.Form):
 
 
 
+# class AdopcionFormulario(forms.Form):
+#     adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.none())
+#     perro = forms.ModelChoiceField(queryset=Perro.objects.all())
+
+#     def __init__(self, *args, **kwargs):
+#         user = kwargs.pop('user')
+#         super(AdopcionFormulario, self).__init__(*args, **kwargs)
+#         self.fields['adoptante'].queryset = Adoptante.objects.filter(creador=user)
+
+
+# class AdopcionFormulario(forms.Form):
+#     adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.none())
+#     perro = forms.ModelChoiceField(queryset=None)
+
+#     def __init__(self, *args, **kwargs):
+#         user = kwargs.pop('user')
+#         perros_disponibles = kwargs.pop('perros_disponibles')
+#         super(AdopcionFormulario, self).__init__(*args, **kwargs)
+#         self.fields['adoptante'].queryset = Adoptante.objects.filter(creador=user)
+#         self.fields['perro'].queryset = perros_disponibles
+
 class AdopcionFormulario(forms.Form):
     adoptante = forms.ModelChoiceField(queryset=Adoptante.objects.none())
-    perro = forms.ModelChoiceField(queryset=Perro.objects.exclude(adopcion__isnull=False))
+    perro = forms.ModelChoiceField(queryset=Perro.objects.none())
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
+        perros_disponibles = kwargs.pop('perros_disponibles')
         super(AdopcionFormulario, self).__init__(*args, **kwargs)
         self.fields['adoptante'].queryset = Adoptante.objects.filter(creador=user)
+        self.fields['perro'].queryset = perros_disponibles
 
 
+# class AdopcionFormulario(forms.Form):
+#     pass
 
 
 

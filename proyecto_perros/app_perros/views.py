@@ -44,18 +44,53 @@ from django.template.defaultfilters import linebreaks
 #         )
 #         return http_response
 
+##vista buscar andando bien
+# def buscar_perro(request):
+#     if request.method == "POST":
+#         formulario = BuscarPerro(request.POST)
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             tamanio = data['tamanio']
+#             if tamanio == 'VER TODOS':
+#                 perros = Perro.objects.all()
+#             else:
+#                 perros = Perro.objects.filter(tamanio__icontains=tamanio)
+#             contexto = {
+#                 "perros": perros,
+#             }
+#             http_response = render(
+#                 request=request,
+#                 template_name='app_perros/lista_perros.html',
+#                 context=contexto,
+#             )
+#             return http_response
+
+#     else:  # GET
+#         formulario = BuscarPerro()
+#         http_response = render(
+#             request=request,
+#             template_name='app_perros/buscar_perros.html',
+#             context={'formulario': formulario}
+#         )
+#         return http_response
+
+# from django.db.models import Q
+
 def buscar_perro(request):
     if request.method == "POST":
         formulario = BuscarPerro(request.POST)
         if formulario.is_valid():
             data = formulario.cleaned_data
             tamanio = data['tamanio']
-            if tamanio == 'VER TODOS':
-                perros = Perro.objects.all()
-            else:
-                perros = Perro.objects.filter(tamanio__icontains=tamanio)
+            
+            # Obtener perros que no han sido adoptados
+            perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+            
+            if tamanio != 'VER TODOS':
+                perros_disponibles = perros_disponibles.filter(tamanio__icontains=tamanio)
+            
             contexto = {
-                "perros": perros,
+                "perros": perros_disponibles,
             }
             http_response = render(
                 request=request,
@@ -72,6 +107,8 @@ def buscar_perro(request):
             context={'formulario': formulario}
         )
         return http_response
+
+
 
 
 # Vistas de Perro original comentada##########################################################################
@@ -164,18 +201,28 @@ def crear_perro(request):
 #     )
 #     return http_response
 
+#esto andaba bien es la original
+# def listar_perros(request):
+#     '''vista para listar perros'''
+#     contexto = {
+#         "perros": Perro.objects.all(),
+#     }
+#     http_response = render(
+#         request=request,
+#         template_name='app_perros/lista_perros.html',
+#         context=contexto,
+#     )
+#     return http_response
 
 def listar_perros(request):
-    '''vista para listar perros'''
+    '''Vista para listar perros'''
+    perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+
     contexto = {
-        "perros": Perro.objects.all(),
+        'perros': perros_disponibles,
     }
-    http_response = render(
-        request=request,
-        template_name='app_perros/lista_perros.html',
-        context=contexto,
-    )
-    return http_response
+
+    return render(request, 'app_perros/lista_perros.html', contexto)
 
 # Vistas de Adoptante ##########################################################################
 
@@ -326,35 +373,170 @@ def eliminar_adoptante(request, adoptante_id):
     ######### vistas de adopcion
     
 
+###vista andando ok
+# def crear_adopcion(request):
+#     '''Vista para crear adopcion'''
+#     if request.method == "POST":
+#         formulario = AdopcionFormulario(request.POST, user=request.user)
 
-def crear_adopcion(request):
-    '''Vista para crear adopcion'''
-    if request.method == "POST":
-        formulario = AdopcionFormulario(request.POST, user=request.user)
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             adoptante = data['adoptante']
+#             perro = data['perro']
+#             creador = request.user
 
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            adoptante = data['adoptante']
-            perro = data['perro']
-            creador = request.user
+#             # Verificar si el perro ya ha sido adoptado
+#             if Adopcion.objects.filter(perro_id=perro.id):
+#                 return redirect(reverse('error_adopcion'))
+#             elif perro.creador == adoptante.creador:
+#                 return redirect(reverse('error_adopcion2'))
+#             else:
+#                 adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+#                 adopcion.save()
+#                 # Redireccionar a la página de felicitaciones
+#                 return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+#     else:  # GET
+#         formulario = AdopcionFormulario(user=request.user)
 
-            # Verificar si el perro ya ha sido adoptado
-            if Adopcion.objects.filter(perro_id=perro.id):
-                return redirect(reverse('error_adopcion'))
-            elif perro.creador == adoptante.creador:
-                return redirect(reverse('error_adopcion2'))
-            else:
-                adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
-                adopcion.save()
-                # Redireccionar a la página de felicitaciones
-                return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
-    else:  # GET
-        formulario = AdopcionFormulario(user=request.user)
+#     context = {
+#         'formulario': formulario
+#     }
+#     return render(request, 'app_perros/formulario_adopcion.html', context)
+#vista andando maso a corregir
+# def crear_adopcion(request):
+#     '''Vista para crear adopcion'''
+#     perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
 
-    context = {
-        'formulario': formulario
-    }
-    return render(request, 'app_perros/formulario_adopcion.html', context)
+#     if request.method == "POST":
+#         formulario = AdopcionFormulario(request.POST, user=request.user)
+
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             adoptante = data['adoptante']
+#             perro = data['perro']
+#             creador = request.user
+
+#             # Verificar si el perro ya ha sido adoptado
+#             if perro.adopcion.exists():
+#                 return redirect(reverse('error_adopcion2'))
+#             elif perro.creador == adoptante.creador:
+#                 return redirect(reverse('error_adopcion2'))
+#             else:
+#                 adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+#                 adopcion.save()
+#                 # Redireccionar a la página de felicitaciones
+#                 return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+#     else:  # GET
+#         formulario = AdopcionFormulario(user=request.user)
+
+#     contexto = {
+#         'formulario': formulario,
+#         'perros': perros_disponibles,
+#     }
+#     return render(request, 'app_perros/formulario_adopcion.html', contexto)
+
+#vista con correcciones que se rompe 
+
+# def crear_adopcion(request):
+#     '''Vista para crear adopcion'''
+#     perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+#     todos_los_perros = Perro.objects.all()
+#     perros_query = todos_los_perros.union(perros_disponibles)
+
+#     if request.method == "POST":
+#         formulario = AdopcionFormulario(request.POST, user=request.user, perros_disponibles=perros_disponibles)
+
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             adoptante = data['adoptante']
+#             perro = data['perro']
+#             creador = request.user
+
+#             # Verificar si el perro ya ha sido adoptado
+#             if perro.adopcion.exists():
+#                 return redirect(reverse('error_adopcion2'))
+#             elif perro.creador == adoptante.creador:
+#                 return redirect(reverse('error_adopcion2'))
+#             else:
+#                 adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+#                 adopcion.save()
+#                 # Redireccionar a la página de felicitaciones
+#                 return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+#     else:  # GET
+#         formulario = AdopcionFormulario(user=request.user, perros_disponibles=perros_query)
+
+#     contexto = {
+#         'formulario': formulario,
+#         'perros': perros_query,
+#     }
+#     return render(request, 'app_perros/formulario_adopcion.html', contexto)
+
+### esta andaba mas o menos bien 
+# def crear_adopcion(request):
+#     '''Vista para crear adopcion'''
+#     perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+
+#     if request.method == "POST":
+#         formulario = AdopcionFormulario(request.POST, user=request.user, perros_disponibles=perros_disponibles)
+
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             adoptante = data['adoptante']
+#             perro = data['perro']
+#             creador = request.user
+
+#             # Verificar si el adoptante ya tiene un perro asignado
+#             if Adopcion.objects.filter(adoptante=adoptante).exists():
+#                 return redirect(reverse('error_adopcion2'))
+
+#             adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+#             adopcion.save()
+
+#             # Redireccionar a la página de felicitaciones
+#             return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+#     else:  # GET
+#         formulario = AdopcionFormulario(user=request.user, perros_disponibles=perros_disponibles)
+
+#     contexto = {
+#         'formulario': formulario,
+#         'perros': perros_disponibles,
+#     }
+#     return render(request, 'app_perros/formulario_adopcion.html', contexto)
+
+#esta andaba bien es la ultima
+# def crear_adopcion(request):
+#     '''Vista para crear adopcion'''
+#     perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+
+#     if request.method == "POST":
+#         formulario = AdopcionFormulario(request.POST, user=request.user, perros_disponibles=perros_disponibles)
+
+#         if formulario.is_valid():
+#             data = formulario.cleaned_data
+#             adoptante = data['adoptante']
+#             perro = data['perro']
+#             creador = request.user
+
+#             # Verificar si el adoptante ya tiene un perro asignado
+#             if Adopcion.objects.filter(adoptante=adoptante).exists():
+#                 return redirect(reverse('error_adopcion2'))
+
+#             adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+#             adopcion.save()
+
+#             # Eliminar el perro de la lista de perros disponibles
+#             perros_disponibles = perros_disponibles.exclude(id=perro.id)
+
+#             # Redireccionar a la página de felicitaciones
+#             return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+#     else:  # GET
+#         formulario = AdopcionFormulario(user=request.user, perros_disponibles=perros_disponibles)
+
+#     contexto = {
+#         'formulario': formulario,
+#         'perros': perros_disponibles,
+#     }
+#     return render(request, 'app_perros/formulario_adopcion.html', contexto)
 
 @login_required
 def listar_adopcion(request):
@@ -376,6 +558,59 @@ def listar_adopcion(request):
 #        perro.delete()
 #        url_exitosa = reverse('listar_perros')
 #        return redirect(url_exitosa)
+   
+def crear_adopcion(request):
+    '''Vista para crear adopcion'''
+    perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
+
+    if request.method == "POST":
+        formulario = AdopcionFormulario(request.POST, user=request.user, perros_disponibles=perros_disponibles)
+
+        # if formulario.is_valid():
+        #     data = formulario.cleaned_data
+        #     adoptante = data['adoptante']
+        #     perro = data['perro']
+        #     creador = request.user
+
+        #     # Verificar si el adoptante ya tiene un perro asignado
+        #     if Adopcion.objects.filter(adoptante=adoptante).exists():
+        #         return redirect(reverse('error_adopcion2'))
+
+        #     adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+        #     adopcion.save()
+
+        #     # Eliminar el perro de la lista de perros disponibles
+        #     perros_disponibles = perros_disponibles.exclude(id=perro.id)
+
+        #     # Redireccionar a la página de felicitaciones
+        #     return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))
+        
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            adoptante = data['adoptante']
+            perro = data['perro']
+            creador = perro.creador  # Obtener el creador del perro
+
+    # Verificar si el usuario actual es el creador del perro
+            if request.user == creador:
+                return redirect(reverse('error_adopcion2'))
+
+            adopcion = Adopcion(adoptante=adoptante, perro=perro, creador=creador)
+            adopcion.save()
+
+    # Eliminar el perro de la lista de perros disponibles
+            perros_disponibles = perros_disponibles.exclude(id=perro.id)
+
+    # Redireccionar a la página de felicitaciones
+            return redirect(reverse('felicitaciones_adopcion', args=[perro.nombre]))   
+    else:  # GET
+        formulario = AdopcionFormulario(user=request.user, perros_disponibles=perros_disponibles)
+
+    contexto = {
+        'formulario': formulario,
+        'perros': perros_disponibles,
+    }
+    return render(request, 'app_perros/formulario_adopcion.html', contexto)   
    
    #####version 2 de eliminar##################
 @login_required

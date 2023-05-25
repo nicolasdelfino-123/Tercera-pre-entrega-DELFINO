@@ -5,9 +5,23 @@
 {% block contenido %}
 <form action="{% url 'crear_adopcion' %}" method="post">
   {% csrf_token %}
-  {{ formulario.as_p }}
+  <div class="field-container">
+    {{ formulario.adoptante.label_tag }}
+    {{ formulario.adoptante }}
+  </div>
+  <div class="field-container">
+    <label>Perro:</label>
+    <select name="{{ formulario.perro.name }}">
+      <option value="">Todos los perros</option>
+      {% for perro in formulario.perro.field.queryset %}
+        <option value="{{ perro.id }}">{{ perro.nombre }} | {{ perro.tamanio }}</option>
+      {% endfor %}
+    </select>
+  </div>
   {{ formulario.errors }}
-  <input type="submit" value="Adoptar" />
+  <div class="button-container">
+    <input type="submit" value="Adoptar" />
+  </div>
 </form>
 
 <div class="static-image-container">
@@ -15,14 +29,21 @@
 </div>
 
 <style>
+.field-container {
+  margin-bottom: 1em;
+}
+
 .static-image-container {
   position: absolute;
   top: 3cm;
   left: 16cm;
   width: 200px;
   height: 200px;
-  opacity: 0.80; /* Ajusta el valor de opacidad según tus preferencias */
-  /* Otros estilos personalizados para el contenedor */
+  opacity: 0.80;
+}
+
+.button-container {
+  margin-top: 1em;
 }
 </style>
 

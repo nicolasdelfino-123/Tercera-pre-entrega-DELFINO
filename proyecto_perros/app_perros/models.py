@@ -15,6 +15,7 @@ class Perro(models.Model):
     raza = models.CharField(max_length=100)
     genero = models.CharField(max_length=10)
     descripcion = models.TextField(blank=True) 
+    
 
     def __str__(self):
         return f"{self.nombre} | {self.tamanio}"
