@@ -27,6 +27,7 @@ class PerroFormulario(forms.ModelForm):
     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
     genero = forms.ChoiceField(label="Género", choices=GENERO_CHOICES)
     descripcion = forms.CharField(label="Descripción", widget=forms.Textarea)
+    edad = forms.IntegerField(label="Edad", min_value=0, max_value=25)
     class Meta:
         model = Perro
         fields = ['nombre', 'tamanio', 'fecha_entrada', 'foto', 'edad', 'raza', 'genero', 'descripcion']
@@ -43,7 +44,29 @@ class PerroFormulario(forms.ModelForm):
         widgets = {
             'foto': forms.ClearableFileInput(attrs={'accept': 'image/*'})
         }
+        
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get('nombre')
 
+        if nombre:
+            cleaned_data['nombre'] = nombre.capitalize()
+  
+        return cleaned_data
+    # def clean_edad(self):
+    #     edad = self.cleaned_data['edad']
+
+    #     # Verificar si la edad es un número
+    #     if not str(edad).isdigit():
+    #         raise forms.ValidationError("La edad debe ser un número.")
+    #      # Verificar si la edad es mayor o igual a cero
+    #     if int(edad) < 0:
+    #         raise forms.ValidationError("La edad no puede ser un número negativo.")
+
+           
+    #     return edad
+    
+    
 class AdoptanteFormulario(forms.Form):
     apellido = forms.CharField(max_length=256)
     nombre = forms.CharField(max_length=256) 

@@ -20,7 +20,7 @@
       <tbody>
         {% for perro in perros %}
         <tr style="border-top: 1px solid #888; border-bottom: 1px solid #888;">
-          <td>{{ perro.nombre }}, {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
+          <td><strong>{{ perro.nombre|default_if_none:''|safe }}</strong>, de tamaño {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
           <td>
             {% if request.user == perro.creador %}
               <a href="{% url 'editar_perro' perro.id %}"><input type="button" value="Editar"/></a>
