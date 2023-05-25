@@ -8,6 +8,7 @@ class BuscarPerro(forms.Form):
         ('chico', 'Chico'),
         ('mediano', 'Mediano'),
         ('grande', 'Grande'),
+        ('VER TODOS', 'VER TODOS'),  # Opción para mostrar todos los perros
     )
     tamanio = forms.ChoiceField(label="Tamaño", choices=TAMANIO_CHOICES)
 
