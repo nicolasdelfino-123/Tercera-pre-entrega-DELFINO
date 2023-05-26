@@ -58,3 +58,10 @@ y le filtrará en la lista los perros para adoptar según el tamaño que haya se
 y una vez allí le sale el formulario para crearse como adoptante.
 + Una vez creado lo envía al apartado adoptar donde podrá seleccionar entre los perros de la lista y de adoptante a Ud mismo, no podrá ver a los demás adoptantes por cuestiones privadas.
 + Finalmente puede acceder a "Acerca de" para ver la información del creador de la página.
+
+## Superuser y Password
+Superuser: Nico
+Password: 11qq22ww33ee
+ruta: admin/
+
++ Desde el panel administrativo usted podrá realizar todas las acciones qwue hace un usuario logueado y podrá manejar los datos de todos los modelos del proyecto.
