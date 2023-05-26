@@ -1,4 +1,4 @@
-### Tercera-pre-entrega-DELFINO
+### Proyecto Final - Delfino, Nicolás
 # proyecto_perros
 
 ## Instrucciones instalar proyecto en local
@@ -27,20 +27,34 @@ python manage.py migrate
 127.0.0.1:8000
 ```
 # El proyecto cuenta con las siguientes rutas
++ admin
 + crear_perro
 + listar_perros
 + crear_adoptante
 + listar_adoptantes
 + crear_adopcion
 + listar_adopcion
-+ buscar_perro
++ buscar_perros
++ error
++ error-2
++ error_creacion_adoptante
++ felicitaciones-adopcion
++ eliminar-adoptante
++ eliminar-perro
++ editar-perro
++ ver-mas
++ perfiles
++ about
 
 ## Acerca del proyecto
 + El proyecto es una página para la creación de adoptantes y la adopción de perros por tamaño (chico, mediano y grande)
-+ Al ingresar a la página usted verá una lista de perros con su fecha de ingreso al canil para adopción, su nombre y tamaño.
-+ Desde allí podrá crear un perro nuevo o buscarlos por tamaño a los que ya han sido creados.
-+ Si selecciona Agregar perro le saldrá el formulario para Agregarlo, una vez agregado lo redireccionará a la lista de perros.
-+ Si selecciona el otro campo Buscar perro por tamaño debe ingresar (chico,mediano o grande) y le filtrará en 
-la lista los perros para adoptar según el tamaño que haya seleccionado.
-+ El otro apartado en la página es Adoptantes donde le muestra los adoptantes o podrá crear un nuevo adopatante.
-+ Finalmente está el link hacia adopciones donde usted podrá acceder para adoptar un perro.
++ Al ingresar a la página usted verá una lista de perros con su fecha de ingreso al canil para adopción, su nombre y tamaño y la fecha que fue ingresado para adopción con la opción de "ver más".
++ Desde allí sin estar logueado solo podrá ingresar al apartado "ver más" de cada perro e ingresar al "acerca de" y buscar perros por tamaño. Ya una vez registrado y logueado podrá crear un perro.
++ También podrá editar o eliminar sus propios canes.
++ Si selecciona "Agregar perro", lo enviará a loguearse y le saldrá el formulario para Agregarlo, una vez agregado lo redireccionará a la lista de perros.
++ Si selecciona el otro campo "Buscar perro por tamaño" debe ingresar (chico,mediano o grande, o VER TODOS) 
+y le filtrará en la lista los perros para adoptar según el tamaño que haya seleccionado.
++ El otro apartado en la página es "Crearme como adoptante" donde también debe estar logueado para hacerlo
+y una vez allí le sale el formulario para crearse como adoptante.
++ Una vez creado lo envía al apartado adoptar donde podrá seleccionar entre los perros de la lista y de adoptante a Ud mismo, no podrá ver a los demás adoptantes por cuestiones privadas.
++ Finalmente puede acceder a "Acerca de" para ver la información del creador de la página.

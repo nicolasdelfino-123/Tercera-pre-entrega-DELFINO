@@ -7,7 +7,7 @@ dist/
 .pytest_cache/
 pygsheets.egg-info/
 .pytest_cache/
-media/*
+# media/*
 ambiente/
 borradoresdecodigo.py
 proyecto_perros/static/django_extensions/
