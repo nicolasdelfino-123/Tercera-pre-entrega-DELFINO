@@ -64,4 +64,4 @@ Superuser: Nico
 Password: 11qq22ww33ee
 ruta: admin/
 
-+ Desde el panel administrativo usted podrá realizar todas las acciones qwue hace un usuario logueado y podrá manejar los datos de todos los modelos del proyecto.
++ Desde el panel administrativo usted podrá realizar todas las acciones que hace un usuario logueado y podrá manejar los datos de todos los modelos del proyecto.
