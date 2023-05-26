@@ -131,7 +131,7 @@ def crear_adoptante(request):
     )
     return http_response
 
-  
+@login_required     
 def listar_adoptantes(request):
     '''Vista para listar los adoptantes'''
     adoptantes = Adoptante.objects.all()
@@ -178,7 +178,7 @@ def listar_adopcion(request):
     )
     return http_response    
 
-   
+@login_required   
 def crear_adopcion(request):
     '''Vista para crear adopcion'''
     perros_disponibles = Perro.objects.filter(adopcion__isnull=True)
