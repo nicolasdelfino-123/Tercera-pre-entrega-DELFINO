@@ -98,7 +98,7 @@ def listar_perros(request):
 
     return render(request, 'app_perros/lista_perros.html', contexto)
 
-
+@login_required
 def crear_adoptante(request):
     '''vista para crear adoptantes'''
     creador = request.user
