@@ -43,11 +43,4 @@ urlpatterns = [
     path("perfiles/", include('perfiles.urls')),
     path("about/", about , name='about')
      
-    #####
-    # path('adoptante/', AdoptanteListView.as_view(), name='listar_adoptante'),
-    # path('adoptantes/<int:pk>/', AdoptanteDetailView.as_view(), name="ver_adoptante"),##
-    # path('crear-adoptante/', AdoptanteCreateView.as_view(), name="crear_adoptante"),
-    # path('editar-adoptante/<int:pk>/', AdoptanteUpdateView.as_view(), name="editar_adoptante"),###
-    # path('eliminar-adoptante/<int:pk>/', AdoptanteDeleteView.as_view(), name="eliminar_adoptante"),##
-   
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
