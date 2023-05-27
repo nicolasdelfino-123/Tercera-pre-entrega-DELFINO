@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LogoutView
@@ -90,17 +90,19 @@ class MiPerfilUpdateView(LoginRequiredMixin, UpdateView):
             return self.form_invalid(form, password_formulario)
 
     def form_valid(self, form, password_formulario):
-        self.object = form.save()
+        self.object = form.save(commit=False)
+        self.object.save()
 
         if password_formulario.is_valid():
             user = password_formulario.save()
+            update_session_auth_hash(self.request, user)
             return redirect(self.success_url)
         else:
             return self.render_to_response(self.get_context_data(form=form, password_formulario=password_formulario))
 
     def form_invalid(self, form, password_formulario):
         return self.render_to_response(self.get_context_data(form=form, password_formulario=password_formulario))
-   
+
 
 def agregar_avatar(request):
     if request.method == "POST":
