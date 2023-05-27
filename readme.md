@@ -62,6 +62,7 @@ y una vez allí le sale el formulario para crearse como adoptante.
 ## Superuser y Password
 Superuser: Nico
 Password: 11qq22ww33ee
+email: nicolasdelfino585@gmail.com
 ruta: admin/
 
 + Desde el panel administrativo usted podrá realizar todas las acciones que hace un usuario logueado y podrá manejar los datos de todos los modelos del proyecto.
