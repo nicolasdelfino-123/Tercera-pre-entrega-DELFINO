@@ -223,6 +223,8 @@ def eliminar_perro(request, perro_id):
             perro.delete()
             return redirect('listar_perros')
         else:
+            # mensaje = f"¿Estás seguro que deseas eliminar al perro {perro.nombre}?"
+            # messages.info(request, mensaje)
             return render(request, 'app_perros/eliminar_perro.html', {'perro': perro})
     else:
         return HttpResponseForbidden('No tienes permisos para eliminar este perro.')
