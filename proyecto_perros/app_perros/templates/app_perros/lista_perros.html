@@ -53,7 +53,9 @@
       </tbody>
     </table>
   </div>
-  <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+  {% if user.is_authenticated and user.username == "nico" %}
+    <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+{% endif %}
   <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
 </section>
 {% endblock contenido %}
