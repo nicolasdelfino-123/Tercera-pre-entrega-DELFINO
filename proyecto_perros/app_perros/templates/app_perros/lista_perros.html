@@ -1,61 +1,58 @@
 {% extends "app_perros/base.html" %}
-
 {% load static %}
 
 {% block contenido %}
-<section>
-  <div>
-    <h1 style="text-align: center; margin-top: 20px; border: 2px solid black; padding: 10px;">Lista de perros en adopción</h1>
-    <br>
-    <table class="table" style="border-collapse: collapse;">
-      <thead style="border-bottom: 1px solid black;">
-        <tr>
-          <th>Nombre y tamaño</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
-          <th>Ver mas</th>
-          <th style="padding-left: 2cm;">Foto</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for perro in perros %}
-        <tr style="border-top: 1px solid #888; border-bottom: 1px solid #888;">
-          <td><strong>{{ perro.nombre|default_if_none:''|safe }}</strong>, de tamaño {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
-          <td>
-            {% if request.user == perro.creador %}
-              <a href="{% url 'editar_perro' perro.id %}"><input type="button" value="Editar"/></a>
-            {% endif %}
-          </td>
-          <td>
-            {% if user == perro.creador %}
+<section class="container">
+  <h1 style="text-align: center; margin-top: 20px; border: 2px solid black; padding: 10px;">Lista de perros en adopción</h1>
+  <br>
+  <table class="table table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>Nombre y tamaño</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+        <th>Ver más</th>
+        <th style="padding-left: 2cm;">Foto</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for perro in perros %}
+      <tr>
+        <td><strong>{{ perro.nombre|default_if_none:''|safe }}</strong>, de tamaño {{ perro.tamanio }} (Ingresado para adopción el {{ perro.fecha_entrada|date:"d/m/Y" }})</td>
+        <td>
+          {% if request.user == perro.creador %}
+            <a href="{% url 'editar_perro' perro.id %}" class="btn btn-sm btn-primary">Editar</a>
+          {% endif %}
+        </td>
+        <td>
+          {% if user == perro.creador %}
             <form action="{% url 'eliminar_perro' perro.id %}" method="post">
               {% csrf_token %}
-              <input type="submit" value="eliminar"/>
+              <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
             </form>
-            {% endif %}
-          </td>
-
-          <td>
-            <a href="{% url 'ver_mas' perro.id %}">ver mas</a>
-          </td>
-            
-          <td>
-            {% if perro.foto %}
+          {% endif %}
+        </td>
+        <td>
+          <a href="{% url 'ver_mas' perro.id %}" class="btn btn-sm btn-info">Ver más</a>
+        </td>
+        <td>
+          {% if perro.foto %}
             <img src="{{ perro.foto.url }}" alt="{{ perro.nombre }}" style="max-width: 200px; max-height: 200px;">
-            {% endif %}
-          </td>
-        
-        <tr>
-          <td colspan="5" style="border-top: 1px solid #888;"></td>
-        </tr>
-        
-        {% endfor %}
-      </tbody>
-    </table>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" style="border-top: 1px solid #888;"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px;">
+    {% if user.is_authenticated and user.username == "nico" %}
+      <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+    {% endif %}
+    <a class="btn btn-primary btn-buscar" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
   </div>
-  {% if user.is_authenticated and user.username == "nico" %}
-    <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
-{% endif %}
-  <a class="btn btn-primary" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
-</section
+</section>
 {% endblock contenido %}
