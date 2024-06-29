@@ -48,11 +48,23 @@
     </tbody>
   </table>
 
-  <div style="margin-top: 20px;">
-    {% if user.is_authenticated and user.username == "nico" %}
-      <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
-    {% endif %}
-    <a class="btn btn-primary btn-buscar" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
+  
+
+  
+
+  <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+    <div>
+      {% if user.is_authenticated and user.username == "nico" %}
+        <a class="btn btn-primary" href="{% url 'crear_perro' %}">Agregar Perro</a>
+      {% endif %}
+      <a class="btn btn-primary btn-buscar" href="{% url 'buscar_perros' %}">Buscar perro por tamaño</a>
+    </div>
+    <div>
+      <button class="btn btn-primary">Súmate como voluntario</button>
+      <button class="btn btn-primary">DONACIONES</button>
+    </div>
   </div>
+    
+  
 </section>
 {% endblock contenido %}
