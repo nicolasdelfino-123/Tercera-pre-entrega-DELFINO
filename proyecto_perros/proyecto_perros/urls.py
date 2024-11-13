@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
     listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro, about, ver_mas,\
-    eliminar_adoptante, felicitaciones_adopcion, mensaje_error, mensaje_error2,error_creacion_adoptante
+    eliminar_adoptante, felicitaciones_adopcion, mensaje_error, mensaje_error2,error_creacion_adoptante,pagina1
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +41,7 @@ urlpatterns = [
     path('editar-perro/<int:id>/', editar_perro, name="editar_perro"),
     path('ver-mas/<int:perro_id>/', ver_mas, name='ver_mas'),
     path("perfiles/", include('perfiles.urls')),
-    path("about/", about , name='about')
+    path("about/", about , name='about'),
+     path('pagina1/', pagina1, name='pagina1')
      
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

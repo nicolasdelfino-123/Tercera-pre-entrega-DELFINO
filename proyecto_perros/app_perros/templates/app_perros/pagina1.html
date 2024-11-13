@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página 1</title>
+  <!-- Estilos internos -->
+  <style>
+    /* Establece el fondo y estilo global */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      
+    }
+
+    /* Contenedor principal que centra el contenido */
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 36px; /* Tamaño de la fuente */
+      color: #333; /* Color del texto */
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Sombreado */
+    }
+
+    /* Estilo del logo */
+    .logo {
+      width: 450px; /* Ajusta el tamaño del logo */
+      margin-top: 20px;
+      margin-bottom: 20px;
+      margin-left: 90px;
+      margin-top: -20px;
+    }
+
+    /* Estilo del botón */
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>HUELLITAS FACTURACIÓN</h1>
+    <!-- Logo debajo del título -->
+    <img src="{% static 'image/logo_huellitas.jpeg' %}" alt="Logo Huellitas" class="logo">
+    <!-- Botón de continuación -->
+    <a href="pagina2.html" class="btn btn-primary">Continuar</a>
+  </div>
+</body>
+</html>
