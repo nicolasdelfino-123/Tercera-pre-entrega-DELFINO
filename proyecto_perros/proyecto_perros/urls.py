@@ -20,7 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from app_perros.views import listar_perros, crear_adoptante, listar_adoptantes, crear_adopcion,\
     listar_adopcion, crear_perro, buscar_perro, eliminar_perro, editar_perro, about, ver_mas,\
-    eliminar_adoptante, felicitaciones_adopcion, mensaje_error, mensaje_error2,error_creacion_adoptante,pagina1
+    eliminar_adoptante, felicitaciones_adopcion, mensaje_error, mensaje_error2,error_creacion_adoptante,pagina1,pagina2
+    
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +43,7 @@ urlpatterns = [
     path('ver-mas/<int:perro_id>/', ver_mas, name='ver_mas'),
     path("perfiles/", include('perfiles.urls')),
     path("about/", about , name='about'),
-     path('pagina1/', pagina1, name='pagina1')
+     path('pagina1/', pagina1, name='pagina1'),
+     path('pagina2/', pagina2, name='pagina2')
      
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página 1</title>
+  <title>Página 2</title>
   <!-- Estilos internos -->
   <style>
     /* Establece el fondo y estilo global */
@@ -18,7 +18,6 @@
       align-items: center;
       height: 100vh;
       text-align: center;
-      
     }
 
     /* Contenedor principal que centra el contenido */
@@ -27,21 +26,15 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 650px; /* Tamaño fijo de 650px */
+      height: 550px; /* Tamaño fijo de 550px */
+      position: relative;
     }
 
     h1 {
       font-size: 36px; /* Tamaño de la fuente */
       color: #333; /* Color del texto */
       text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Sombreado */
-    }
-
-    /* Estilo del logo */
-    .logo {
-      width: 450px; /* Ajusta el tamaño del logo */
-      margin-top: 20px;
-      margin-bottom: 20px;
-      margin-left: 90px;
-      margin-top: -20px;
     }
 
     /* Estilo del botón */
@@ -53,6 +46,9 @@
       text-decoration: none;
       border-radius: 5px;
       margin-top: 20px;
+      position: absolute;
+      bottom: 20px; /* Distancia desde la parte inferior */
+      right: 20px; /* Distancia desde la parte derecha */
     }
 
     .btn:hover {
@@ -62,11 +58,11 @@
 </head>
 <body>
   <div class="container">
-    <h1>HUELLITAS FACTURACIÓN</h1>
-    <!-- Logo debajo del título -->
-    <img src="{% static 'image/logo_huellitas.jpeg' %}" alt="Logo Huellitas" class="logo">
+    <h1>Página 2</h1>
+    <!-- Aquí puedes agregar el contenido de la página 2 -->
+    <p>parrafo pagina 2</p>
     <!-- Botón de continuación -->
-    <a href="{% url 'pagina2' %}" class="btn btn-primary">Continuar</a>
+    <a href="pagina3.html" class="btn btn-primary">Continuar</a>
   </div>
 </body>
 </html>

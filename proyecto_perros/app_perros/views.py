@@ -293,3 +293,6 @@ def mensaje_error2(request):
 
 def pagina1(request):
     return render(request, 'app_perros/pagina1.html')
+
+def pagina2(request):
+    return render(request, 'app_perros/pagina2.html') 
